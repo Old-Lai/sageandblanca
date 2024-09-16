@@ -13,7 +13,7 @@ export default function Root() {
   }, [window.location.pathname])
   return (
     <>
-      <header className=" sticky left-0 top-0 flex h-16 w-full items-center justify-between bg-zinc-700/55 text-white">
+      <header className=" fixed left-0 top-0 flex h-16 w-full items-center justify-between bg-zinc-700/55 text-white">
         <NavBar />
         <h1 className="z-10 flex-1 text-center text-3xl font-medium">Shop Name</h1>
         <ShoppingCart className="z-10 w-16" />
