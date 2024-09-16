@@ -5,7 +5,7 @@ export default function NavBar() {
   return (
     <div className="h-full w-16 bg-gray-600/0">
       <button className="h-full w-full flex items-center justify-center" onClick={()=>toggleNavPanel()}>
-        <Menu id="navHambergerIcon" className="z-10"/>
+        <Menu id="navHambergerIcon"/>
         <X id="navHambergerCloseIcon" className="z-10 hidden"/>
       </button>
       <div id="navPanel" className="absolute left-0 top-0 hidden h-screen w-screen flex flex-col items-center justify-center bg-slate-700">
