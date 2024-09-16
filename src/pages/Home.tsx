@@ -1,7 +1,12 @@
+import banner from "@/assets/temp/temp-banner.jpeg"
+
 export default function Home() {
   return (
     <>
-      <h1 className="text-5xl font-bold underline"> Welcome To Home </h1>
+      <div>
+        <img src={banner} className="h-screen"/>
+      </div>
+      <p>test</p>
     </>
   );
 }
