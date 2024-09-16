@@ -9,13 +9,15 @@ export default function Root() {
     window.scrollY >= 80 ? setAtTop(false) : setAtTop(true);
   window.addEventListener("scroll", shrinkNavbar);
   useEffect(() => {
-    console.log(window.location.pathname)
-  }, [window.location.pathname])
+    console.log(window.location.pathname);
+  }, [window.location.pathname]);
   return (
     <>
-      <header className=" fixed left-0 top-0 flex h-16 w-full items-center justify-between bg-zinc-700/55 text-white">
+      <header className="fixed left-0 top-0 flex h-16 w-full items-center justify-between bg-zinc-700/55 text-white z-10">
         <NavBar />
-        <h1 className="z-10 flex-1 text-center text-3xl font-medium">Shop Name</h1>
+        <h1 className="z-10 flex-1 text-center text-2xl font-semibold">
+          SAGE & BLANCA
+        </h1>
         <ShoppingCart className="z-10 w-16" />
       </header>
       <main>
