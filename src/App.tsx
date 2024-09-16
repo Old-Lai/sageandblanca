@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
-import { Root, Home } from "./pages"
+import { Root, Home, Order } from "./pages"
 import { NotFound_404 } from "./pages/status_pages"
 
 const router = createBrowserRouter([
@@ -12,10 +12,10 @@ const router = createBrowserRouter([
         path:"/",
         element: <Home />,
       },
-      // {
-      //   path:"/contact",
-      //   element: <ContactUs />,
-      // },
+      {
+        path:"/order",
+        element: <Order />,
+      },
       // {
       //   path:"/admin",
       //   element: <AdminPage />,
