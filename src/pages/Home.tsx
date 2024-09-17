@@ -1,4 +1,5 @@
 import banner from "@/assets/temp/temp-banner.jpeg";
+import ProductCard from "@/components/productCard";
 
 export default function Home() {
   return (
@@ -12,7 +13,7 @@ export default function Home() {
           Bespoke Blooms
         </h1>
       </section>
-      <section className="mx-4 my-20 flex items-center justify-center">
+      <div className="mx-5 my-20 flex flex-col items-center justify-center">
         <section>
           <h1 className="p-5 text-center text-3xl font-semibold">
             An expression of the season
@@ -23,8 +24,8 @@ export default function Home() {
             and suprises are guaranteed.
           </p>
         </section>
-
-      </section>
+        <ProductCard image={banner} name="Bouquet" dollar={90} cent={0}/>
+      </div>
     </>
   );
 }
