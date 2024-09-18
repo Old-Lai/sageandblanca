@@ -13,7 +13,7 @@ export default function Root() {
   }, [window.location.pathname]);
   return (
     <>
-      <header className="fixed left-0 top-0 flex h-16 w-full items-center justify-between bg-zinc-700/55 text-white z-10">
+      <header className="fixed left-0 top-0 flex h-16 w-full items-center justify-between bg-zinc-700/55 text-white">
         <NavBar />
         <h1 className="z-10 flex-1 text-center text-2xl font-semibold">
           SAGE & BLANCA
