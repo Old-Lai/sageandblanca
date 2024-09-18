@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
-import { Root, Home, Order } from "./pages"
-import { NotFound_404 } from "./pages/status_pages"
+import { Root, Home, Order } from "@/pages"
+import { NotFound_404 } from "@/pages/status_pages"
 
 const router = createBrowserRouter([
   {
