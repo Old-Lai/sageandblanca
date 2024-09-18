@@ -1,19 +1,19 @@
 import banner from "@/assets/temp/temp-banner.jpeg";
+import { OrderInquiryForm } from "@/components";
 import ProductCard from "@/components/productCard";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   return (
     <>
-      <section className="flex h-[95vh] items-center justify-center bg-gray-800">
+      <section className="flex h-[95vh] items-center justify-center">
         <img
           src={banner}
-          className="absolute left-0 top-0 h-[95vh] w-full object-cover"
+          className="absolute left-0 top-0 -z-10 h-[95vh] w-full object-cover"
         />
-        <h1 className="z-10 text-[2.9rem] font-bold text-white">
-          Bespoke Blooms
-        </h1>
+        <h1 className="text-[2.9rem] font-bold text-white">Bespoke Blooms</h1>
       </section>
-      <div className="mx-5 my-20 flex flex-col items-center justify-center">
+      <div className="mx-5 mb-7 mt-20 flex flex-col items-center justify-center">
         <section>
           <h1 className="p-5 text-center text-3xl font-semibold">
             An expression of the season
@@ -24,7 +24,30 @@ export default function Home() {
             and suprises are guaranteed.
           </p>
         </section>
-        <ProductCard image={banner} name="Bouquet" dollar={90} cent={0}/>
+        {Array.from({ length: 4 }).map((_, index) => (
+          <ProductCard
+            image={banner}
+            name="Bouquet"
+            dollar={90 + index}
+            cent={0}
+            key={"product-card-" + index.toString()}
+          />
+        ))}
+        <Button className="h-14 rounded-full border-2 border-black bg-transparent px-10 text-black hover:border-transparent hover:bg-black hover:text-white">
+          Shop Now
+        </Button>
+      </div>
+      <img src={banner} className="h-[80vh] w-full object-cover" />
+      <div className="mx-5 my-20 flex flex-col items-center justify-center">
+        <section>
+          <h1 className="p-5 text-center text-3xl font-semibold">
+            Order Inquiry
+          </h1>
+          <p className="text-center text-lg font-light">
+            For all inquiries, please send us a message using this form
+          </p>
+        </section>
+        <OrderInquiryForm className="mt-5 w-full"/>
       </div>
     </>
   );
