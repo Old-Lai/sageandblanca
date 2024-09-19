@@ -1,7 +1,7 @@
 import banner from "@/assets/temp/temp-banner.jpeg";
 import { OrderInquiryForm, ProductCard, ProductImageList } from "@/components";
 import { Button } from "@/components/ui/button";
-import { array } from "zod";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   return (
@@ -26,16 +26,20 @@ export default function Home() {
         </section>
         {Array.from({ length: 3 }).map((_, index) => (
           <ProductCard
+            size="large"
             image={banner}
             name={`Bouquet ${index + 1}`}
             dollar={90 + index}
-            cent={(index + 1 )* 13}
+            cent={(index + 1) * 13}
+            productId={`${index}`}
             key={"product-card-" + index.toString()}
           />
         ))}
-        <Button className="h-14 rounded-full border-2 border-black bg-transparent px-10 text-black hover:border-transparent hover:bg-black hover:text-white">
-          Shop Now
-        </Button>
+        <Link to="/order">
+          <Button className="h-14 rounded-full border-2 border-black bg-transparent px-10 text-black hover:border-transparent hover:bg-black hover:text-white">
+            Shop Now
+          </Button>
+        </Link>
       </div>
       <img src={banner} className="h-[80vh] w-full object-cover" />
       <div className="mx-5 my-20 flex flex-col items-center justify-center">
@@ -50,9 +54,9 @@ export default function Home() {
         <OrderInquiryForm className="mt-5 w-full" />
       </div>
       <div className="mx-5 my-20 flex flex-col items-center justify-center">
-          <ProductImageList
-            images={[banner, banner, banner, banner, banner, banner]}
-          />
+        <ProductImageList
+          images={[banner, banner, banner, banner, banner, banner]}
+        />
       </div>
     </>
   );

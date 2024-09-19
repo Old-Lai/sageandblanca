@@ -1,13 +1,12 @@
-import { Outlet } from "react-router-dom";
-import { NavBar } from "@/components";
+import { Outlet, useLocation } from "react-router-dom";
+import { FooterNav, NavBar } from "@/components";
 import { ShoppingCart } from "lucide-react";
-import { SiInstagram } from "@icons-pack/react-simple-icons";
-import { useCallback, useEffect, useRef, useState } from "react";
 
-import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
 
 export default function Root() {
   const [scrollDir, setScrollDir] = useState("up");
+  const location = useLocation(); //to rerender on route change
 
   useEffect(() => {
     const threshold = 0;
@@ -37,19 +36,27 @@ export default function Root() {
 
     return () => window.removeEventListener("scroll", onScroll);
   }, [scrollDir]);
-  // useEffect(() => {
-  //   console.log(window.location.pathname);
-  // }, [window.location.pathname]);
 
-  const navBarVariants: Record<string, string> = {
-    up: "h-16 bg-zinc-700/55",
-    down: "h-12 bg-zinc-900",
+  //reset scroll to top when page changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location])
+
+  const navBarVariants: Record<string, Record<string, string>> = {
+    "/": {
+      up: "fixed left-0 top-0 h-16 bg-zinc-700/55",
+      down: "fixed left-0 top-0 h-12 bg-zinc-900"
+    },
+    "/order": {
+      up: "fixed left-0 top-0 h-16 bg-white text-zinc-900 shadow-lg mb-4",
+      down: "fixed left-0 top-0 h-12 bg-zinc-900"
+    },
   };
 
   return (
-    <>
+    <div className="transition-all duration-300">
       <header
-        className={`${navBarVariants[scrollDir]} fixed left-0 top-0 flex w-full items-center justify-between text-white backdrop-blur-sm transition-all duration-300`}
+        className={`${navBarVariants[window.location.pathname][scrollDir]} flex w-full items-center justify-between text-white backdrop-blur-sm transition-all duration-300`}
       >
         <NavBar />
         <h1 className="z-10 flex-1 text-center text-2xl font-semibold">
@@ -60,22 +67,9 @@ export default function Root() {
       <main>
         <Outlet />
       </main>
-      <footer className="flex w-full flex-col rounded-b-2xl bg-[#f6a9a0] p-5">
-        <div className="mb-5 flex justify-between">
-          <h2 className="text-2xl font-semibold">Useful Links</h2>
-          <SiInstagram />
-        </div>
-        <p className="mb-2">FAQs</p>
-        <p className="mb-2">Terms of Service</p>
-        <p className="mb-2">Privacy Policy</p>
-        <p>Flower Care</p>
-        <h2 className="my-5 text-2xl font-semibold">Hours</h2>
-        <p>Monday - Saturday</p>
-        <p>10am - 6pm</p>
-        <p className="mt-5 underline">info@sageandblanca.com</p>
-        <p className="underline">(555) 555-5555</p>
-        <p className="mb-10 mt-5 underline">Santa Monica, Los Angeles</p>
+      <footer>
+        <FooterNav />
       </footer>
-    </>
+    </div>
   );
 }

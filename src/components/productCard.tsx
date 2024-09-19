@@ -1,18 +1,47 @@
 export default function ProductCard(props: {
+  size?: string;
+  productId: string;
   name: string;
   image: string;
   dollar: number;
   cent?: number;
 }) {
-  const { name, image, dollar, cent } = props;
+  const productCardStyle: Record<string, Record<string, string>> = {
+    default: {
+      card:"",
+      image: "h-[600px]",
+      name: "text-[1.7rem]",
+      cost: "flex text-[1.2rem]",
+    },
+    large: {
+      card:"",
+      image: "h-[600px]",
+      name: "text-[1.7rem]",
+      cost: "flex text-[1.2rem]",
+    },
+    small: {
+      card:"w-[calc(50%-0.5rem)]",
+      image: "h-[calc(100%/2-0.5rem)] aspect-square",
+      name: "text-[1.7rem] text-center",
+      cost: "text-[1.2rem] justify-center",
+    },
+  };
+  let { size, productId, name, image, dollar, cent } = props;
+  if (!size) {
+    size = "default";
+  }
+
   return (
-    <div className="my-5">
-      <div className="h-full w-full">
-        <img src={image} className="h-[600px] object-cover" />
+    <div className={`${productCardStyle[size].card} my-5`} onClick={(e)=>{console.log("clicked ", productId)}}>
+      <div>
+        <img
+          src={image}
+          className={`${productCardStyle[size].image} object-cover`}
+        />
       </div>
       <div className="my-2">
-        <h1 className="text-[1.7rem]">{name}</h1>
-        <div className="flex text-[1.2rem]">
+        <h1 className={`${productCardStyle[size].name}`}>{name}</h1>
+        <div className={`${productCardStyle[size].cost} flex`}>
           <h2 className="mr-2"> from </h2>
           <h2>
             ${dollar}.
@@ -23,3 +52,4 @@ export default function ProductCard(props: {
     </div>
   );
 }
+// 

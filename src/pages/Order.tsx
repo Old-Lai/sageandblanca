@@ -1,8 +1,22 @@
+import banner from "@/assets/temp/temp-banner.jpeg";
+import { ProductCard } from "@/components";
 export default function Order() {
-    return (
-      <>
-        <h1 className="text-5xl font-bold underline"> Welcome To Order </h1>
-      </>
-    );
-  }
-  
+  return (
+    <div className="mt-24 w-full">
+      <div className="mb-10 flex w-full flex-wrap justify-between px-5">
+        {Array.from({ length: 15 }).map((_, index) => (
+            <ProductCard
+              size="small"
+              image={banner}
+              name={`Bouquet ${index + 1}`}
+              dollar={90 + index}
+              cent={index + 1}
+              productId={`${index}`}
+              key={"product-card-" + index.toString()}
+             
+            />
+        ))}
+      </div>
+    </div>
+  );
+}
