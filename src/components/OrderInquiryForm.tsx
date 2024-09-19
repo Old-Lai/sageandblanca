@@ -32,7 +32,7 @@ const formSchema = z.object({
   message: z.string().max(255, "message over 255 character").optional(),
 });
 
-export default function OrderInquiryForm(props: { className: string }) {
+export default function OrderInquiryForm(props: { className?: string }) {
   const { className } = props;
 
   const form = useForm<z.infer<typeof formSchema>>({

@@ -1,7 +1,7 @@
 import banner from "@/assets/temp/temp-banner.jpeg";
-import { OrderInquiryForm } from "@/components";
-import ProductCard from "@/components/productCard";
+import { OrderInquiryForm, ProductCard, ProductImageList } from "@/components";
 import { Button } from "@/components/ui/button";
+import { array } from "zod";
 
 export default function Home() {
   return (
@@ -24,12 +24,12 @@ export default function Home() {
             and suprises are guaranteed.
           </p>
         </section>
-        {Array.from({ length: 4 }).map((_, index) => (
+        {Array.from({ length: 3 }).map((_, index) => (
           <ProductCard
             image={banner}
-            name="Bouquet"
+            name={`Bouquet ${index + 1}`}
             dollar={90 + index}
-            cent={0}
+            cent={(index + 1 )* 13}
             key={"product-card-" + index.toString()}
           />
         ))}
@@ -47,7 +47,12 @@ export default function Home() {
             For all inquiries, please send us a message using this form
           </p>
         </section>
-        <OrderInquiryForm className="mt-5 w-full"/>
+        <OrderInquiryForm className="mt-5 w-full" />
+      </div>
+      <div className="mx-5 my-20 flex flex-col items-center justify-center">
+          <ProductImageList
+            images={[banner, banner, banner, banner, banner, banner]}
+          />
       </div>
     </>
   );
