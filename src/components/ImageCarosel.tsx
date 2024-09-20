@@ -24,7 +24,7 @@ export default function ImageCarosel() {
       {images.map((image, index) => {
         return (
           <div
-            className={`fade-in-out absolute left-0 top-0 h-full w-full transition-opacity duration-500 ${currentIndex === index ? "opcaity-100" : "opacity-0"}`}
+            className={`fade-in-out -z-10 absolute left-0 top-0 h-full w-full transition-opacity duration-500 ${currentIndex === index ? "opcaity-100" : "opacity-0"}`}
           >
             <img
               key={index}
