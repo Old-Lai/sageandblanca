@@ -1,0 +1,79 @@
+[
+  {
+    "productID": 1,
+    "name": "Bouqet of Roses",
+    "dollar": "15",
+    "cent": "75",
+    "image": ""
+  },
+  {
+    "productID": 2,
+    "name": "Sunset Bouquet",
+    "dollar": "20",
+    "cent": "50",
+    "image": "/path/to/image1.jpg"
+  },
+  {
+    "productID": 3,
+    "name": "Spring Bouqet",
+    "dollar": "18",
+    "cent": "25",
+    "image": "/path/to/image2.jpg"
+  },
+  {
+    "productID": 4,
+    "name": "Morning Glory Bouquet",
+    "dollar": "12",
+    "cent": "99",
+    "image": "/path/to/image3.jpg"
+  },
+  {
+    "productID": 5,
+    "name": "Evening Bouqet",
+    "dollar": "15",
+    "cent": "75",
+    "image": "/path/to/image4.jpg"
+  },
+  {
+    "productID": 6,
+    "name": "Autumn Bouquet",
+    "dollar": "25",
+    "cent": "00",
+    "image": "/path/to/image5.jpg"
+  },
+  {
+    "productID": 7,
+    "name": "Summer Bouqet",
+    "dollar": "18",
+    "cent": "50",
+    "image": "/path/to/image6.jpg"
+  },
+  {
+    "productID": 8,
+    "name": "Winter Bouquet",
+    "dollar": "22",
+    "cent": "00",
+    "image": "/path/to/image7.jpg"
+  },
+  {
+    "productID": 9,
+    "name": "Dawn Bouqet",
+    "dollar": "10",
+    "cent": "99",
+    "image": "/path/to/image8.jpg"
+  },
+  {
+    "productID": 10,
+    "name": "Twilight Bouquet",
+    "dollar": "12",
+    "cent": "50",
+    "image": "/path/to/image9.jpg"
+  },
+  {
+    "productID": 11,
+    "name": "Midnight Bouqet",
+    "dollar": "15",
+    "cent": "00",
+    "image": "/path/to/image10.jpg"
+  }
+]

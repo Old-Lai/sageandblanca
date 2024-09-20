@@ -4,8 +4,29 @@ import { ShoppingCart } from "lucide-react";
 
 import { useEffect, useState } from "react";
 
+const navBarVariants: Record<string, Record<string, string>> = {
+  "/": {
+    up: "fixed left-0 top-0 h-16 bg-zinc-700/55",
+    down: "fixed left-0 top-0 h-12 bg-zinc-900",
+  },
+  "/order": {
+    up: "fixed left-0 top-0 h-16 bg-white text-zinc-900 shadow-lg mb-4",
+    down: "fixed left-0 top-0 h-12 bg-zinc-900",
+  },
+  default: {
+    up: "fixed left-0 top-0 h-16 bg-white text-zinc-900 shadow-lg mb-4",
+    down: "fixed left-0 top-0 h-12 bg-zinc-900",
+  },
+};
+
 export default function Root() {
   const [scrollDir, setScrollDir] = useState("up");
+  const [currentPath, setCurrentPath] = useState(
+    window.location.pathname in navBarVariants
+      ? window.location.pathname
+      : "default",
+  );
+
   const location = useLocation(); //to rerender on route change
 
   useEffect(() => {
@@ -40,23 +61,15 @@ export default function Root() {
   //reset scroll to top when page changes
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [location])
-
-  const navBarVariants: Record<string, Record<string, string>> = {
-    "/": {
-      up: "fixed left-0 top-0 h-16 bg-zinc-700/55",
-      down: "fixed left-0 top-0 h-12 bg-zinc-900"
-    },
-    "/order": {
-      up: "fixed left-0 top-0 h-16 bg-white text-zinc-900 shadow-lg mb-4",
-      down: "fixed left-0 top-0 h-12 bg-zinc-900"
-    },
-  };
+    setCurrentPath(window.location.pathname in navBarVariants
+      ? window.location.pathname
+      : "default",)
+  }, [location]);
 
   return (
     <div className="transition-all duration-300">
       <header
-        className={`${navBarVariants[window.location.pathname][scrollDir]} flex w-full items-center justify-between text-white backdrop-blur-sm transition-all duration-300`}
+        className={`${navBarVariants[currentPath][scrollDir ? scrollDir : "up"]} flex w-full items-center justify-between text-white backdrop-blur-sm transition-all duration-300`}
       >
         <NavBar />
         <h1 className="z-10 flex-1 text-center text-2xl font-semibold">

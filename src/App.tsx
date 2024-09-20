@@ -1,43 +1,29 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom"
-import { Root, Home, Order } from "@/pages"
-import { NotFound_404 } from "@/pages/status_pages"
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Root, Home, Order, SingleProduct } from "@/pages";
+import { NotFound_404 } from "@/pages/status_pages";
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <Root />,
-    errorElement: <NotFound_404/>,
+    errorElement: <NotFound_404 />,
     children: [
       {
-        path:"/",
+        path: "/",
         element: <Home />,
       },
       {
-        path:"/order",
+        path: "/order",
         element: <Order />,
       },
-      // {
-      //   path:"/admin",
-      //   element: <AdminPage />,
-      // },
-      // {
-      //   path:"/celebrations",
-      //   element: <Celebrations />,
-      // },
-      // {
-      //   path:"/galleries",
-      //   element: <Portfolio />,
-      // },
-      // {
-      //   path:"/about",
-      //   element: <About />,
-      // },
-    ]
-  }
-])
+      {
+        path: "/product/:id",
+        element: <SingleProduct />,
+      },
+    ],
+  },
+]);
 
 export default function App() {
-  return (
-    <RouterProvider router={router}/>
-  )
+  return <RouterProvider router={router} />;
 }
