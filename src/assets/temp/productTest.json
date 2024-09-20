@@ -1,79 +1,62 @@
-[
-  {
-    "productID": 1,
-    "name": "Bouqet of Roses",
+{
+  "1": {
+    "name": "Bouquet of Roses",
     "dollar": "15",
     "cent": "75",
     "image": ""
   },
-  {
-    "productID": 2,
-    "name": "Sunset Bouquet",
+  "2": {
+    "name": "Fresh Fruits Basket",
     "dollar": "20",
-    "cent": "50",
-    "image": "/path/to/image1.jpg"
-  },
-  {
-    "productID": 3,
-    "name": "Spring Bouqet",
-    "dollar": "18",
-    "cent": "25",
-    "image": "/path/to/image2.jpg"
-  },
-  {
-    "productID": 4,
-    "name": "Morning Glory Bouquet",
-    "dollar": "12",
-    "cent": "99",
-    "image": "/path/to/image3.jpg"
-  },
-  {
-    "productID": 5,
-    "name": "Evening Bouqet",
-    "dollar": "15",
-    "cent": "75",
-    "image": "/path/to/image4.jpg"
-  },
-  {
-    "productID": 6,
-    "name": "Autumn Bouquet",
-    "dollar": "25",
     "cent": "00",
-    "image": "/path/to/image5.jpg"
+    "image": ""
   },
-  {
-    "productID": 7,
-    "name": "Summer Bouqet",
-    "dollar": "18",
+  "3": {
+    "name": "Deluxe Chocolates",
+    "dollar": "25",
     "cent": "50",
-    "image": "/path/to/image6.jpg"
+    "image": ""
   },
-  {
-    "productID": 8,
-    "name": "Winter Bouquet",
+  "4": {
+    "name": "Soft Toys Set",
+    "dollar": "18",
+    "cent": "00",
+    "image": ""
+  },
+  "5": {
+    "name": "Flower Arrangement",
     "dollar": "22",
     "cent": "00",
-    "image": "/path/to/image7.jpg"
+    "image": ""
   },
-  {
-    "productID": 9,
-    "name": "Dawn Bouqet",
-    "dollar": "10",
-    "cent": "99",
-    "image": "/path/to/image8.jpg"
+  "6": {
+    "name": "Fruit and Cheese Box",
+    "dollar": "28",
+    "cent": "00",
+    "image": ""
   },
-  {
-    "productID": 10,
-    "name": "Twilight Bouquet",
+  "7": {
+    "name": "Gift Wrap Service",
     "dollar": "12",
     "cent": "50",
-    "image": "/path/to/image9.jpg"
+    "image": ""
   },
-  {
-    "productID": 11,
-    "name": "Midnight Bouqet",
-    "dollar": "15",
+  "8": {
+    "name": "Premium Wine Set",
+    "dollar": "35",
     "cent": "00",
-    "image": "/path/to/image10.jpg"
+    "image": ""
+  },
+  "9": {
+    "name": "Personalized Mug",
+    "dollar": "18",
+    "cent": "50",
+    "image": ""
+  },
+  "10": {
+    "name": "Gourmet Food Basket",
+    "dollar": "30",
+    "cent": "00",
+    "image": ""
   }
-]
+}
