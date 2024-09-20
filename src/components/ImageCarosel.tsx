@@ -1,16 +1,11 @@
-import banner from "@/assets/temp/temp-banner.jpeg";
-import image2 from "@/assets/temp/temp-image.jpg";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 
-export default function ImageCarosel() {
+export default function ImageCarosel(props: {
+  images: Array<Record<string, string>>;
+}) {
+  const { images } = props;
   const [currentIndex, setCurrentIndex] = useState(0);
-  const images = [
-    { url: banner, alt: "Image 1" },
-    { url: image2, alt: "Image 2" },
-    { url: banner, alt: "Image 3" },
-    // Add more images here...
-  ];
 
   const nextImage = () => {
     if (currentIndex < images.length - 1) setCurrentIndex(currentIndex + 1);
@@ -24,10 +19,10 @@ export default function ImageCarosel() {
       {images.map((image, index) => {
         return (
           <div
-            className={`fade-in-out -z-10 absolute left-0 top-0 h-full w-full transition-opacity duration-500 ${currentIndex === index ? "opcaity-100" : "opacity-0"}`}
+            key={index}
+            className={`fade-in-out absolute left-0 top-0 -z-10 h-full w-full transition-opacity duration-500 ${currentIndex === index ? "opcaity-100" : "opacity-0"}`}
           >
             <img
-              key={index}
               src={image.url}
               alt={image.alt}
               className="h-full object-cover"
