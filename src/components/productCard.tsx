@@ -38,7 +38,7 @@ export default function ProductCard(props: {
   return (
     <div
       className={`${productCardStyle[size].card} my-5`}
-      onClick={(e) => {
+      onClick={() => {
         console.log("clicked ", productId);
         navigate(`/product/${productId}`)
       }}
