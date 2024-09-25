@@ -13,8 +13,10 @@ export default function NavBar() {
           <Menu id="navHambergerIcon" />
           <X id="navHambergerCloseIcon" className="z-10 hidden" />
         </button>
-        <h1 className=" z-10 text-center text-2xl font-semibold">SAGE & BLANCA</h1>
-        <ShoppingCart className="w-16 z-10" />
+        <h1 className="z-10 text-center text-2xl font-semibold">
+          SAGE & BLANCA
+        </h1>
+        <ShoppingCart className="z-10 w-16" />
       </div>
       <div
         id="navPanel"

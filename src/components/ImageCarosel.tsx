@@ -16,35 +16,34 @@ export default function ImageCarosel(props: {
 
   return (
     <div className="relative h-[600px]">
-      {images.map((image, index) => {
-        return (
-          <div
-            key={index}
-            className={`fade-in-out absolute left-0 top-0 -z-10 h-full w-full transition-opacity duration-500 ${currentIndex === index ? "opcaity-100" : "opacity-0"}`}
-          >
-            <img
-              src={image.url}
-              alt={image.alt}
-              className="h-full object-cover"
-            />
-          </div>
-        );
-      })}
-      <div className="absolute top-0 h-full w-full">
+      <div id="caroselImages">
+        {images.map((image, index) => {
+          return (
+            <div
+              key={index}
+              className={`fade-in-out absolute h-full transition-opacity duration-500 ${currentIndex === index ? "opcaity-100" : "opacity-0"}`}
+            >
+              <img
+                src={image.url}
+                alt={image.alt}
+                className="h-full object-cover"
+              />
+            </div>
+          );
+        })}
+      </div>
+      <div className="absolute top-1/2 w-full">
         <button
           className="h-full w-[50%] text-left"
           onClick={() => prevImage()}
         >
           <ChevronLeft />
         </button>
-        <button
-          className="h-full w-[50%] transform pl-[44%] text-right"
-          onClick={() => nextImage()}
-        >
+        <button className="h-full w-[50%] pl-[44%]" onClick={() => nextImage()}>
           <ChevronRight />
         </button>
       </div>
-      <div className="absolute bottom-0 flex w-full items-center justify-center">
+      <div className="absolute bottom-2 flex w-full items-center justify-center">
         {images.map((_, index) => {
           return (
             <p

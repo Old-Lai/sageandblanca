@@ -5,14 +5,14 @@ import { ImageCarosel } from "@/components";
 import products from "@/assets/temp/productTest.json";
 
 interface Product {
-    name: string,
-    dollar: string,
-    cent: string,
-    image: string,
+  name: string;
+  dollar: string;
+  cent: string;
+  image: string;
 }
 
 export default function SingleProduct() {
-  let { id: productId }  = useParams();
+  let { id: productId } = useParams();
   const images = [
     { url: banner, alt: "Image 1" },
     { url: image2, alt: "Image 2" },
@@ -20,17 +20,14 @@ export default function SingleProduct() {
     // Add more images here...
   ];
 
-  productId = productId? productId : "0";
-  
+  productId = productId ? productId : "0";
+
   let product: Product = products["1"];
 
-  console.log(product)
+  console.log(product);
   return (
-    <div className="my-20 mx-5">
-      <ImageCarosel images={images}/>
-      <div>
-        
-      </div>
+    <div className="mx-5 my-20">
+      <ImageCarosel images={images} />
     </div>
   );
 }
