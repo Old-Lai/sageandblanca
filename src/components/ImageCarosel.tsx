@@ -1,6 +1,5 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useEffect, useState } from "react";
-import { clearInterval } from "timers";
+import { useState } from "react";
 
 export default function ImageCarosel(props: {
   images: Array<Record<string, string>>;
