@@ -1,16 +1,11 @@
 import { Outlet, useLocation } from "react-router-dom";
 import { FooterNav, NavBar } from "@/components";
-import { ShoppingCart } from "lucide-react";
 
 import { useEffect, useState } from "react";
 
 const navBarVariants: Record<string, Record<string, string>> = {
   "/": {
     up: "fixed left-0 top-0 h-16 bg-zinc-700/55",
-    down: "fixed left-0 top-0 h-12 bg-zinc-900",
-  },
-  "/order": {
-    up: "fixed left-0 top-0 h-16 bg-white text-zinc-900 shadow-lg mb-4",
     down: "fixed left-0 top-0 h-12 bg-zinc-900",
   },
   default: {
@@ -61,9 +56,16 @@ export default function Root() {
   //reset scroll to top when page changes
   useEffect(() => {
     window.scrollTo(0, 0);
-    setCurrentPath(window.location.pathname in navBarVariants
-      ? window.location.pathname
-      : "default",)
+    setCurrentPath(
+      window.location.pathname in navBarVariants
+        ? window.location.pathname
+        : "default",
+    );
+    console.log(
+      window.location.pathname in navBarVariants
+        ? window.location.pathname
+        : "default",
+    );
   }, [location]);
 
   return (
@@ -72,10 +74,6 @@ export default function Root() {
         className={`${navBarVariants[currentPath][scrollDir ? scrollDir : "up"]} flex w-full items-center justify-between text-white backdrop-blur-sm transition-all duration-300`}
       >
         <NavBar />
-        <h1 className="z-10 flex-1 text-center text-2xl font-semibold">
-          SAGE & BLANCA
-        </h1>
-        <ShoppingCart className="z-10 w-16" />
       </header>
       <main>
         <Outlet />
