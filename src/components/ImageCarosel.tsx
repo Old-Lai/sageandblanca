@@ -1,5 +1,6 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { clearInterval } from "timers";
 
 export default function ImageCarosel(props: {
   images: Array<Record<string, string>>;
@@ -9,9 +10,11 @@ export default function ImageCarosel(props: {
 
   const nextImage = () => {
     if (currentIndex < images.length - 1) setCurrentIndex(currentIndex + 1);
+    else setCurrentIndex(0);
   };
   const prevImage = () => {
     if (currentIndex > 0) setCurrentIndex(currentIndex - 1);
+    else setCurrentIndex(images.length-1);
   };
 
   return (
@@ -21,7 +24,7 @@ export default function ImageCarosel(props: {
           return (
             <div
               key={index}
-              className={`fade-in-out absolute h-full transition-opacity duration-500 ${currentIndex === index ? "opcaity-100" : "opacity-0"}`}
+              className={`fade-in-out absolute h-full transition-opacity duration-1000 ${currentIndex === index ? "opcaity-100" : "opacity-0"}`}
             >
               <img
                 src={image.url}
@@ -43,17 +46,8 @@ export default function ImageCarosel(props: {
           <ChevronRight />
         </button>
       </div>
-      <div className="absolute bottom-2 flex w-full items-center justify-center">
-        {images.map((_, index) => {
-          return (
-            <p
-              key={index}
-              className={`text-5xl ${currentIndex === index ? "text-zinc-800" : "text-white/55"}`}
-            >
-              .
-            </p>
-          );
-        })}
+      <div className="absolute top-5 right-5">
+        <p className="font-semibold">{`${currentIndex+1} / ${images.length}`}</p>
       </div>
     </div>
   );
