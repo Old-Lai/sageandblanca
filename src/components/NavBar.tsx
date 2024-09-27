@@ -13,9 +13,9 @@ export default function NavBar() {
           <Menu id="navHambergerIcon" />
           <X id="navHambergerCloseIcon" className="z-10 hidden" />
         </button>
-        <h1 className="z-10 text-center text-2xl font-semibold">
-          SAGE & BLANCA
-        </h1>
+        <button className="z-10 text-center text-2xl font-semibold">
+          <Link to="/">SAGE & BLANCA</Link>
+        </button>
         <ShoppingCart className="z-10 w-16" />
       </div>
       <div
