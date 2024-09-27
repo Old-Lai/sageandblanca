@@ -27,19 +27,29 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Value } from "@radix-ui/react-select";
 
-const formSchema = z.object({
-  size: z.enum(["Small", "Medium", "Large", ""], {
-    required_error: "Please select a size.",
-  }),
-  colorTone: z.string().optional(),
-  includeVase: z.string(),
-  specificRequest: z.string().optional(),
-  allergies: z.string().optional(),
-  allergiesText: z.string().optional(),
-  deliveryTime: z.string(),
-});
+const formSchema = z
+  .object({
+    size: z.enum(["Small", "Medium", "Large", ""], {
+      required_error: "Please select a size.",
+    }),
+    colorTone: z.string().optional(),
+    includeVase: z.string(),
+    specificRequest: z.string().optional(),
+    allergies: z.string().optional(),
+    allergiesText: z.string().optional(),
+    deliveryTime: z.string(),
+  })
+  .refine((data) => {
+    const allergiesResponse = data.allergies;
+    if (allergiesResponse == "Yes" && data.allergiesText) return true;
+    else if (data.allergies == "No") return true;
+    else return false;
+  }, {
+    message: "Please specify your allergies",
+    path: ['allergiesText']
+  });
 
-export default function ProductOptionMenu(props: { className?: string }) {
+export default function ProductOptionMenu(props: Readonly<{ className?: string }>) {
   const { className } = props;
   const [haveAllergies, setHaveAllergies] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
@@ -153,7 +163,7 @@ export default function ProductOptionMenu(props: { className?: string }) {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="Yes" >Yes</SelectItem>
+                    <SelectItem value="Yes">Yes</SelectItem>
                     <SelectItem value="No">No</SelectItem>
                   </SelectContent>
                 </Select>
