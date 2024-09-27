@@ -66,7 +66,7 @@ export default function Root() {
   return (
     <div>
       <header
-        className={`${navBarVariants[currentPath][scrollDir ? scrollDir : "up"]} fixed z-10 flex w-full items-center justify-between text-white backdrop-blur-sm transition-all duration-300`}
+        className={`${navBarVariants[currentPath][scrollDir]} fixed z-10 flex w-full items-center justify-between text-white backdrop-blur-sm transition-all duration-300`}
       >
         <NavBar />
       </header>
