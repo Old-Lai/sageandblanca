@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Root, Home, Order, SingleProduct, Faq } from "@/pages";
+import { Root, Home, Order, SingleProduct } from "@/pages";
+import { Faq } from "./pages/useful_links";
 import { NotFound_404 } from "@/pages/status_pages";
 
 const router = createBrowserRouter([
