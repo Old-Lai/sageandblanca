@@ -4,4 +4,4 @@ export { default as OrderInquiryForm } from "./OrderInquiryForm";
 export { default as ProductImageList } from "./ProductImageList";
 export { default as FooterNav } from "./FooterNav";
 export { default as ImageCarosel } from "./ImageCarosel";
-export { default as ProductOptionMenu } from "./productOptionMenu";
+export { default as ProductOptionMenu } from "./ProductOptionMenu";
