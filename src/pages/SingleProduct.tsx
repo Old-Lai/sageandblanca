@@ -1,7 +1,7 @@
 import banner from "@/assets/temp/temp-banner.jpeg";
 import image2 from "@/assets/temp/temp-image.jpg";
 import { useParams } from "react-router-dom";
-import { ImageCarosel } from "@/components";
+import { ImageCarosel, ProductOptionMenu } from "@/components";
 import products from "@/assets/temp/productTest.json";
 
 interface Product {
@@ -28,6 +28,9 @@ export default function SingleProduct() {
   return (
     <div className="mx-5 my-20">
       <ImageCarosel images={images} />
+      <h1 className="my-5 text-3xl font-semibold">Rose Bouquet</h1>
+      <p className="text-xl font-semibold mb-10">from $90.00</p>
+      <ProductOptionMenu className="w-full"/>
     </div>
   );
 }
