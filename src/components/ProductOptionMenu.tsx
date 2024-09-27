@@ -26,6 +26,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Value } from "@radix-ui/react-select";
+import { validateFieldsNatively } from "@hookform/resolvers";
 
 const formSchema = z
   .object({
@@ -41,8 +42,10 @@ const formSchema = z
   })
   .refine((data) => {
     const allergiesResponse = data.allergies;
-    if (allergiesResponse == "Yes" && data.allergiesText) return true;
-    else if (data.allergies == "No") return true;
+    const allergyTextResponse  = data.allergiesText;
+    console.log(allergiesResponse, allergyTextResponse)
+    if (allergiesResponse == "Yes" && allergyTextResponse?.toString().trim() != "") return true;
+    else if (allergiesResponse == "No") return true;
     else return false;
   }, {
     message: "Please specify your allergies",
@@ -171,13 +174,12 @@ export default function ProductOptionMenu(props: Readonly<{ className?: string }
               </FormItem>
             )}
           />
-          {haveAllergies && (
             <FormField
               control={form.control}
               name="allergiesText"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Allergies Description</FormLabel>
+                  <FormLabel>If Yes, Allergies Description</FormLabel>
                   <FormControl>
                     <Textarea
                       rows={10}
@@ -189,7 +191,6 @@ export default function ProductOptionMenu(props: Readonly<{ className?: string }
                 </FormItem>
               )}
             />
-          )}
           <FormField
             control={form.control}
             name="deliveryTime"
