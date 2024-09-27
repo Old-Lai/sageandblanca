@@ -61,11 +61,6 @@ export default function Root() {
         ? window.location.pathname
         : "default",
     );
-    console.log(
-      window.location.pathname in navBarVariants
-        ? window.location.pathname
-        : "default",
-    );
   }, [location]);
 
   return (
