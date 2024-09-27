@@ -36,7 +36,7 @@ const formSchema = z
     colorTone: z.string().optional(),
     includeVase: z.string(),
     specificRequest: z.string().optional(),
-    allergies: z.string().optional(),
+    allergies: z.string(),
     allergiesText: z.string().optional(),
     deliveryTime: z.string(),
   })
