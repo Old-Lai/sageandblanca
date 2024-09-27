@@ -36,21 +36,29 @@ const formSchema = z
     allergiesText: z.string().optional(),
     deliveryTime: z.string(),
   })
-  .refine((data) => {
-    const allergiesResponse = data.allergies;
-    const allergyTextResponse  = data.allergiesText;
-    console.log(allergiesResponse, allergyTextResponse)
-    if (allergiesResponse == "Yes" && allergyTextResponse?.toString().trim() != "") return true;
-    else if (allergiesResponse == "No") return true;
-    else return false;
-  }, {
-    message: "Please specify your allergies",
-    path: ['allergiesText']
-  });
+  .refine(
+    (data) => {
+      const allergiesResponse = data.allergies;
+      const allergyTextResponse = data.allergiesText;
+      console.log(allergiesResponse, allergyTextResponse);
+      if (
+        allergiesResponse == "Yes" &&
+        allergyTextResponse?.toString().trim() != ""
+      )
+        return true;
+      else if (allergiesResponse == "No") return true;
+      else return false;
+    },
+    {
+      message: "Please specify your allergies",
+      path: ["allergiesText"],
+    },
+  );
 
-export default function ProductOptionMenu(props: Readonly<{ className?: string }>) {
+export default function ProductOptionMenu(
+  props: Readonly<{ className?: string }>,
+) {
   const { className } = props;
-  const [haveAllergies, setHaveAllergies] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -170,23 +178,23 @@ export default function ProductOptionMenu(props: Readonly<{ className?: string }
               </FormItem>
             )}
           />
-            <FormField
-              control={form.control}
-              name="allergiesText"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>If Yes, Allergies Description</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      rows={10}
-                      placeholder="Let us know what not to use"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          <FormField
+            control={form.control}
+            name="allergiesText"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>If Yes, Allergies Description</FormLabel>
+                <FormControl>
+                  <Textarea
+                    rows={10}
+                    placeholder="Let us know what not to use"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="deliveryTime"
