@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Root, Home, Order, SingleProduct } from "@/pages";
-import { Faq } from "./pages/useful_links";
+import { Faq, TermsOfServices, PrivacyPolicy, FlowerCare } from "./pages/useful_links";
 import { NotFound_404 } from "@/pages/status_pages";
 
 const router = createBrowserRouter([
@@ -24,6 +24,18 @@ const router = createBrowserRouter([
       {
         path: "/faq",
         element: <Faq />,
+      },
+      {
+        path: "/terms-of-services",
+        element: <TermsOfServices />,
+      },
+      {
+        path: "/privacy-policy",
+        element: <PrivacyPolicy />,
+      },
+      {
+        path: "/flower-care",
+        element: <FlowerCare />,
       },
     ],
   },

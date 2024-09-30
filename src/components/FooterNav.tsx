@@ -8,12 +8,14 @@ export default function FooterNav() {
         <h2 className="text-2xl font-semibold">Useful Links</h2>
         <SiInstagram />
       </div>
-      <Link to="/faq" className="mb-2">
+      <Link to="faq" className="mb-2">
         FAQs
       </Link>
-      <p className="mb-2">Terms of Service</p>
-      <p className="mb-2">Privacy Policy</p>
-      <p>Flower Care</p>
+      <Link to="terms-of-services" className="mb-2">
+        Terms of Service
+      </Link>
+      <Link to="privacy-policy" className="mb-2">Privacy Policy</Link>
+      <Link to="flower-care">Flower Care</Link>
       <h2 className="my-5 text-2xl font-semibold">Hours</h2>
       <p>Monday - Saturday</p>
       <p>10am - 6pm</p>
