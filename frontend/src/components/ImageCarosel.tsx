@@ -1,9 +1,9 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 
-export default function ImageCarosel(props: {
+export default function ImageCarosel(props: Readonly<{
   images: Array<Record<string, string>>;
-}) {
+}>) {
   const { images } = props;
   const [currentIndex, setCurrentIndex] = useState(0);
 
