@@ -17,8 +17,8 @@ export default function ImageCarosel(props: {
   };
 
   return (
-    <div className="relative h-[600px]">
-      <div id="caroselImages">
+    <div className="relative h-[600px] bg-zinc-600">
+      <div id="caroselImages" className="flex justify-center">
         {images.map((image, index) => {
           return (
             <div
@@ -34,7 +34,7 @@ export default function ImageCarosel(props: {
           );
         })}
       </div>
-      <div className="absolute top-1/2 w-full">
+      <div className="absolute w-full h-full">
         <button
           className="h-full w-[50%] text-left"
           onClick={() => prevImage()}
