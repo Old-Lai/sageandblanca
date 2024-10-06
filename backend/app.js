@@ -4,6 +4,7 @@ const pool = require("./src/client");
 const dotenv = require("dotenv");
 dotenv.config();
 const app = express();
+const mediaRouter = require('./src/routes/mediaRoutes')
 
 async function ConnectPool() {
   try {
@@ -21,9 +22,12 @@ async function ConnectPool() {
 }
 
 ConnectPool();
+app.use(express.json())
+app.use(cors())
+app.use('/api', mediaRouter)
 
 app.use((err, req, res, next) => {
-  res.status(500).next({
+  res.status(500).send({
     status: "error",
     name: err.name,
     message: err.message,
