@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Root, Home, Order, SingleProduct } from "@/pages";
 import { Faq, TermsOfServices, PrivacyPolicy, FlowerCare } from "./pages/useful_links";
+import FileUpload from "./pages/dev/FileUpload";
 import { NotFound_404 } from "@/pages/status_pages";
 
 const router = createBrowserRouter([
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: "/flower-care",
         element: <FlowerCare />,
+      },
+      {
+        path: "/dev",
+        element: <FileUpload />,
       },
     ],
   },
