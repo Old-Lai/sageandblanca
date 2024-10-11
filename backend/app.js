@@ -4,7 +4,7 @@ const pool = require("./src/client");
 const dotenv = require("dotenv");
 dotenv.config();
 const app = express();
-const mediaRouter = require('./src/routes/mediaRoutes')
+const apiRouter = require("./src/routes/api")
 
 async function ConnectPool() {
   try {
@@ -23,8 +23,9 @@ async function ConnectPool() {
 
 ConnectPool();
 app.use(express.json())
+app.use(express.static('public'));
 app.use(cors())
-app.use('/api', mediaRouter)
+app.use('/api', apiRouter)
 
 app.use((err, req, res, next) => {
   res.status(500).send({
