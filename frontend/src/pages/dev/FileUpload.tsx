@@ -1,100 +1,100 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-
-import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { useState, useRef } from "react";
 import { Input } from "@/components/ui/input";
-import { Accessibility } from "lucide-react";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { X } from "lucide-react";
 
 const MAX_UPLOAD_SIZE = 1024 * 1024 * 3; // 3MB
-const ACCEPTED_FILE_TYPES = ["image/png"];
-
-const FormSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-  file: z
-    .instanceof(FileList)
-    .refine((file) => file?.length == 1, "File is required"),
-  // .refine((file) => {
-  //   return !file || file.size <= MAX_UPLOAD_SIZE;
-  // }, "File size must be less than 3MB")
-  // .refine((file) => {
-  //   return file && ACCEPTED_FILE_TYPES.includes(file.type);
-  // }, "File must be an image"),
-});
+const ACCEPTED_FILE_TYPES = ".jpg,.jpeg,.png";
 
 export default function FileUpload() {
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-    defaultValues: {},
-  });
+  const [files, setFiles] = useState<File[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log("submitted");
-    console.log(JSON.stringify(data, null, 2));
-  }
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const selectedFiles = Array.from(e.target.files)
+        .filter((file) =>
+          ["image/jpeg", "image/jpg", "image/png"].includes(file.type),
+        )
+        .filter((file) => file.size < MAX_UPLOAD_SIZE);
+      setFiles(selectedFiles);
+    }
+  };
+
+  const handleRemoveFile = (index: number) => {
+    const newFiles = files.filter((_, i) => i !== index);
+    setFiles(newFiles);
+    updateFileInput(newFiles);
+  };
+
+  const handleClearAll = () => {
+    setFiles([]);
+    updateFileInput([]);
+  };
+
+  const updateFileInput = (newFiles: File[]) => {
+    if (fileInputRef.current) {
+      const dataTransfer = new DataTransfer();
+      newFiles.forEach((file) => dataTransfer.items.add(file));
+      fileInputRef.current.files = dataTransfer.files;
+    }
+  };
 
   return (
-    <div className="my-20 h-[80vh] bg-orange-400/55">
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full p-10">
-          <FormField
-            control={form.control}
-            name="file"
-            render={({ field }) => {
-              return (
-                <FormItem>
-                  <FormLabel>File</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="file"
-                      placeholder="shadcn"
-                      {...field}
-                      value={undefined}
-                      onChange={(event) => {
-                        field.onChange(event.target?.files);
+    <div className="mx-auto my-20 w-full max-w-md space-y-4">
+      <div className="space-y-2">
+        <Label htmlFor="file-upload">Upload Files</Label>
+        <Input
+          id="file-upload"
+          type="file"
+          multiple
+          accept={ACCEPTED_FILE_TYPES}
+          ref={fileInputRef}
+          onChange={handleFileChange}
+          className="cursor-pointer"
+        />
+      </div>
+      {files.length > 0 && (
+        <div className="space-y-2">
+          <Label>Uploaded Files</Label>
+          <ul className="space-y-2">
+            {files.map((file, index) => (
+              <li
+                key={index}
+                className="bg-secondary flex items-center justify-between rounded-md p-2"
+              >
+                <div className="flex items-center space-x-2">
+                  <div className="relative h-20 w-20 overflow-hidden rounded">
+                    <img
+                      src={URL.createObjectURL(file)}
+                      alt={`Preview of ${file.name}`}
+                      className="h-full w-full object-cover"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.src = "/placeholder.svg?height=40&width=40";
                       }}
                     />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              );
-            }}
-          />
-          <Button type="submit">Submit</Button>
-        </form>
-      </Form>
-      {/* <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
-        <FormField
-          control={form.control}
-          name="username"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Username</FormLabel>
-              <FormControl>
-                <Input placeholder="shadcn" {...field} />
-              </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit">Submit</Button>
-      </form>
-    </Form> */}
+                  </div>
+                  <span className="truncate text-sm">{file.name}</span>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => handleRemoveFile(index)}
+                  className="h-8 w-8"
+                >
+                  <X className="h-4 w-4" />
+                  <span className="sr-only">Remove file</span>
+                </Button>
+              </li>
+            ))}
+          </ul>
+          <Button variant="outline" onClick={handleClearAll} className="w-full">
+            Clear All
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
