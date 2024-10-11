@@ -24,7 +24,7 @@ const medias = {
           SELECT * FROM medias;
         `);
         return result.rows;
-      } catch (e) {
+      } catch (error) {
         console.error("Error getting all medias!!!", error);
       }
     },
@@ -35,9 +35,9 @@ const medias = {
         } = await client.query(`
           SELECT * FROM medias 
           WHERE internal_id = $1;
-        `);
+        `,[internal_id]);
         return media;
-      } catch (e) {
+      } catch (error) {
         console.error("Error getting media by internal id!!!", error);
       }
     },
@@ -55,7 +55,7 @@ const medias = {
 
         `);
           return media;
-        } catch (e) {
+        } catch (error) {
           console.error("Error getting media by internal id!!!", error);
         }
       },
@@ -72,7 +72,7 @@ const medias = {
 
         `);
           return media;
-        } catch (e) {
+        } catch (error) {
           console.error("Error getting media by internal id!!!", error);
         }
       },
