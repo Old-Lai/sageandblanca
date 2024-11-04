@@ -13,6 +13,12 @@ const productCardStyle: Record<string, Record<string, string>> = {
     name: "text-[1.7rem]",
     cost: "flex text-[1.2rem]",
   },
+  medium: {
+    card: "flex flex-col justify-center items-center",
+    image: "h-[300px]",
+    name: "text-[1.3rem]",
+    cost: "flex text-[1rem]",
+  },
   small: {
     card: "w-[calc(50%-0.5rem)]",
     image: "h-[calc(100%/2-0.5rem)] aspect-square",

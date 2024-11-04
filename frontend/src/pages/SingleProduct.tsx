@@ -13,23 +13,22 @@ interface Product {
 
 export default function SingleProduct() {
   let { id: productId } = useParams();
+  productId = productId ? productId : "0";
+  let product: Product = products["2"];
+
   const images = [
-    { url: banner, alt: "Image 1" },
+    { url: product.image, alt: "Image 1" },
     { url: image2, alt: "Image 2" },
-    { url: banner, alt: "Image 3" },
+    { url: product.image, alt: "Image 3" },
     // Add more images here...
   ];
-
-  productId = productId ? productId : "0";
-
-  let product: Product = products["1"];
 
   console.log(product);
   return (
     <div className="mx-5 my-20">
       <ImageCarosel images={images} />
-      <h1 className="my-5 text-3xl font-semibold">Rose Bouquet</h1>
-      <p className="text-xl font-semibold mb-10">from $90.00</p>
+      <h1 className="my-5 text-3xl font-semibold">{product.name}</h1>
+      <p className="text-xl font-semibold mb-10">from ${product.dollar}.{product.cent}</p>
       <ProductOptionMenu className="w-full"/>
     </div>
   );

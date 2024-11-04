@@ -3,7 +3,7 @@
     "name": "Bouquet of Roses",
     "dollar": "15",
     "cent": "75",
-    "image": ""
+    "image": "http://localhost:3000/images/test.jpeg"
   },
   "2": {
     "name": "Fresh Fruits Basket",
@@ -15,48 +15,6 @@
     "name": "Deluxe Chocolates",
     "dollar": "25",
     "cent": "50",
-    "image": ""
-  },
-  "4": {
-    "name": "Soft Toys Set",
-    "dollar": "18",
-    "cent": "00",
-    "image": ""
-  },
-  "5": {
-    "name": "Flower Arrangement",
-    "dollar": "22",
-    "cent": "00",
-    "image": ""
-  },
-  "6": {
-    "name": "Fruit and Cheese Box",
-    "dollar": "28",
-    "cent": "00",
-    "image": ""
-  },
-  "7": {
-    "name": "Gift Wrap Service",
-    "dollar": "12",
-    "cent": "50",
-    "image": ""
-  },
-  "8": {
-    "name": "Premium Wine Set",
-    "dollar": "35",
-    "cent": "00",
-    "image": ""
-  },
-  "9": {
-    "name": "Personalized Mug",
-    "dollar": "18",
-    "cent": "50",
-    "image": ""
-  },
-  "10": {
-    "name": "Gourmet Food Basket",
-    "dollar": "30",
-    "cent": "00",
-    "image": ""
+    "image": "http://localhost:3000/images/test.jpeg"
   }
 }
