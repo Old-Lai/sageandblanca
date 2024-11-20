@@ -1,0 +1,1 @@
+export { default as NotFound_404 } from "./NotFound_404"
