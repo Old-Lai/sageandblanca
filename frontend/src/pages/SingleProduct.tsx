@@ -1,4 +1,4 @@
-import banner from "@/assets/temp/temp-banner.jpeg";
+// import banner from "@/assets/temp/temp-banner.jpeg";
 import image2 from "@/assets/temp/temp-image.jpg";
 import { useParams } from "react-router-dom";
 import { ImageCarosel, ProductOptionMenu } from "@/components";
