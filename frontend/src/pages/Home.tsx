@@ -28,17 +28,17 @@ export default function Home() {
             and suprises are guaranteed.
           </p>
         </section>
-        {Object.keys(productList).map((productKey, index) => {
+        {Object.keys(productList).map((productKey) => {
           const product = productList[productKey as keyof Object];
           return (
             <ProductCard
+              key={"product-card-" + product.category}
               size="large"
               image={product.image}
               name={`${product.name}`}
               dollar={product.dollar}
               cent={product.cent}
-              productId={`${index}`}
-              key={"product-card-" + index.toString()}
+              productId={`${product.category}`}
             />
           );
         })}
@@ -48,7 +48,11 @@ export default function Home() {
           </Button>
         </Link>
       </div>
-      <img src={main_banner} className="h-[80vh] w-full object-cover" alt="main banner flower bouquet"/>
+      <img
+        src={main_banner}
+        className="h-[80vh] w-full object-cover"
+        alt="main banner flower bouquet"
+      />
       <div className="mx-5 my-20 flex flex-col items-center justify-center">
         <section>
           <h1 className="p-5 text-center text-3xl font-semibold">
