@@ -20,15 +20,8 @@ export default function FooterNav() {
       <p>Monday - Saturday</p>
       <p>10am - 6pm</p>
       <p className="mt-5 underline">info@sageandblanca.com</p>
-      <p className="underline">(555) 555-5555</p>
+      <p className="underline">(562) 888-3133</p>
       <p className="mb-10 mt-5 underline">Santa Monica, Los Angeles</p>
-      <a
-        href="https://www.flaticon.com/free-icons/spices"
-        title="spices icons"
-        className="text-[0.6rem]"
-      >
-        Spices icons created by Paul J. - Flaticon
-      </a>
     </div>
   );
 }
