@@ -8,14 +8,16 @@ const productCardStyle: Record<string, Record<string, string>> = {
     cost: "flex text-[1.2rem]",
   },
   large: {
-    card: "",
+    card: "my-5",
     image: "h-[600px]",
+    text: "my-2",
     name: "text-[1.7rem]",
     cost: "flex text-[1.2rem]",
   },
   medium: {
     card: "flex flex-col justify-center items-center",
-    image: "h-[300px]",
+    image: "h-[300px] aspect-[16/9] rounded",
+    text: "flex flex-col justify-center items-center my-2",
     name: "text-[1.3rem]",
     cost: "flex text-[1rem]",
   },
@@ -55,7 +57,7 @@ export default function ProductCard(props: Readonly<{
 
   return (
     <button
-      className={`${productCardStyle[size].card} my-5`}
+      className={`${productCardStyle[size].card}`}
       onClick={() => {
         navigate(`/product/${productId}`);
       }}
@@ -67,10 +69,10 @@ export default function ProductCard(props: Readonly<{
           alt="product"
         />
       </div>
-      <div className="my-2">
+      <div className={`${productCardStyle[size].text}`}>
         <h1 className={`${productCardStyle[size].name} text-left`}>{name}</h1>
         <div className={`${productCardStyle[size].cost} flex`}>
-          <h2 className="mr-2"> from </h2>
+          <h2 className="mr-2">From</h2>
           <h2>
             ${dollar}.
             {centDisplay}
