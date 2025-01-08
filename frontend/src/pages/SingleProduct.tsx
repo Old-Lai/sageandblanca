@@ -19,12 +19,13 @@ export default function SingleProduct() {
   })[0]
   let centDisplay = formatCent(product.cent);
 
-  let images = imageList[productId as keyof Object];
+  let imagesArr = imageList[productId as keyof typeof imageList];
+
   return (
     <div className="mx-5 my-20">
       {isValidProductId ? (
         <>
-          <ImageCarosel images={images.list} />
+          <ImageCarosel images={imagesArr} />
           <h1 className="my-5 text-3xl font-semibold">{product.name}</h1>
         <p className="text-xl font-semibold mb-10">from ${product.dollar}.{centDisplay}</p>
         <ProductOptionMenu className="w-full"/>

@@ -2,7 +2,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 
 export default function ImageCarosel(props: Readonly<{
-  images: Array<Object>;
+  images: Array<{ src: string; alt: string }>;
 }>) {
   const { images } = props;
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -22,7 +22,7 @@ export default function ImageCarosel(props: Readonly<{
         {images.map((image, index) => {
           return (
             <div
-              key={index}
+              key={`${image.alt}-${index}`}
               className={`fade-in-out absolute h-full transition-opacity duration-1000 ${currentIndex === index ? "opcaity-100" : "opacity-0"}`}
             >
               <img
