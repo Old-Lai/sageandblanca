@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { formatCent } from "@/lib/formatCent";
 
 const productCardStyle: Record<string, Record<string, string>> = {
   default: {
@@ -39,15 +40,7 @@ export default function ProductCard(props: Readonly<{
 }>) {
   let { size, productId, name, image, dollar, cent } = props;
   //variable for edited cent basedon the digits
-  let centDisplay = "00"
-  //format cent string (add 0 if less than 10, only takes first two digits if cent have three digits)
-  if(cent && cent != 0)
-    if(cent < 10)
-      centDisplay = `0${cent}`
-    else if(cent > 99)
-      centDisplay = cent.toString().split('.')[0]
-    else
-      centDisplay = `${cent}`
+  let centDisplay = formatCent(cent);
 
   if (!size) {
     size = "default";

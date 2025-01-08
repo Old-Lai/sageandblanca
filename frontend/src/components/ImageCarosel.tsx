@@ -2,7 +2,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 
 export default function ImageCarosel(props: Readonly<{
-  images: Array<Record<string, string>>;
+  images: Array<Object>;
 }>) {
   const { images } = props;
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -26,7 +26,7 @@ export default function ImageCarosel(props: Readonly<{
               className={`fade-in-out absolute h-full transition-opacity duration-1000 ${currentIndex === index ? "opcaity-100" : "opacity-0"}`}
             >
               <img
-                src={image.url}
+                src={image.src}
                 alt={image.alt}
                 className="h-full object-cover"
               />
