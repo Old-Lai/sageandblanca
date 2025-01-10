@@ -6,7 +6,7 @@ export default function Order() {
   const navigate = useNavigate();
   return (
     <div className="mt-20 w-full">
-      <div className="mb-10 flex w-full flex-wrap justify-between px-5">
+      <div className="mb-10 flex flex-col w-full justify-between px-5">
         {Object.keys(productList).map((productKey) => {
           const product = productList[productKey as keyof Object];
           return (
