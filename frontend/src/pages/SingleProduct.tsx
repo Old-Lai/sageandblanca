@@ -10,16 +10,22 @@ export default function SingleProduct() {
     return productList[key as keyof Object].category;
   });
   let isValidProductId = productCategory.indexOf(`${productId}`) >= 0;
-  let product = Object.keys(productList).map((key) => {
-    return productList[key as keyof Object].category == `${productId}`
-      ? productList[key as keyof Object]
-      : null;
-  }).filter((item) => {
-    return item !== null;
-  })[0]
+  let product = Object.keys(productList)
+    .map((key) => {
+      return productList[key as keyof Object].category == `${productId}`
+        ? productList[key as keyof Object]
+        : null;
+    })
+    .filter((item) => {
+      return item !== null;
+    })[0];
   let centDisplay = formatCent(product.cent);
-
   let imagesArr = imageList[productId as keyof typeof imageList];
+
+  function submitOrder(value: Object) {
+    console.log(value);
+    console.log("add to cart");
+  }
 
   return (
     <div className="mx-5 my-20">
@@ -27,8 +33,15 @@ export default function SingleProduct() {
         <>
           <ImageCarosel images={imagesArr} />
           <h1 className="my-5 text-3xl font-semibold">{product.name}</h1>
-        <p className="text-xl font-semibold mb-10">from ${product.dollar}.{centDisplay}</p>
-        <ProductOptionMenu className="w-full"/>
+          <p className="mb-10 text-xl font-semibold">
+            from ${product.dollar}.{centDisplay}
+          </p>
+          <ProductOptionMenu
+            className="w-full"
+            additional_options={product.additional_options}
+            size_options={product.size_options}
+            submitOrder={submitOrder}
+          />
         </>
       ) : (
         <h2>Invalid product id</h2>

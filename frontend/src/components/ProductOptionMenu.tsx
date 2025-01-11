@@ -22,55 +22,83 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-
-const formSchema = z
-  .object({
-    size: z.enum(["Small", "Medium", "Large", ""], {
-      required_error: "Please select a size.",
-    }),
-    colorTone: z.string().optional(),
-    includeVase: z.string(),
-    specificRequest: z.string().optional(),
-    allergies: z.string(),
-    allergiesText: z.string().optional(),
-    deliveryTime: z.string(),
-  })
-  .refine(
-    (data) => {
-      const allergiesResponse = data.allergies;
-      const allergyTextResponse = data.allergiesText;
-      console.log(allergiesResponse, allergyTextResponse);
-      if (
-        allergiesResponse == "Yes" &&
-        allergyTextResponse?.toString().trim() != ""
-      )
-        return true;
-      else if (allergiesResponse == "No") return true;
-      else return false;
-    },
-    {
-      message: "Please specify your allergies",
-      path: ["allergiesText"],
-    },
-  );
+import { SizeOption } from "@/lib/interfaces";
+import { useState } from "react";
 
 export default function ProductOptionMenu(
-  props: Readonly<{ className?: string }>,
+  props: Readonly<{
+    className?: string;
+    additional_options?: string[];
+    size_options: SizeOption[];
+    submitOrder: Function;
+  }>,
 ) {
-  const { className } = props;
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const { className, additional_options, size_options, submitOrder } = props;
+  const [estimatedCost, setEstimatedCost] = useState(size_options[0].dollar);
+
+  type Size_options = (typeof size_options)[number]["value"];
+  const SIZE_VALUES: [Size_options, ...Size_options[]] = [
+    `${size_options[0].value}_${0}`,
+    ...size_options.slice(1).map((size, index) => `${size.value}_${index + 1}`),
+  ];
+  const OrderSchema = z
+    .object({
+      size: z.enum(SIZE_VALUES, {
+        required_error: "Please select a size.",
+      }),
+      colorTone: z.string().optional(),
+      includeVase: z
+        .enum(["Yes", "No"], { required_error: "Please select an option" })
+        .optional(),
+      premiumPackaging: z
+        .enum(["Yes", "No"], { required_error: "Please select an option" })
+        .optional(),
+      specificRequest: z.string().optional(),
+      allergies: z.string(),
+      allergiesText: z.string().optional(),
+      deliveryTime: z.string(),
+    })
+    .refine(
+      (data) => {
+        const allergiesResponse = data.allergies;
+        const allergyTextResponse = data.allergiesText;
+        if (
+          allergiesResponse == "Yes" &&
+          allergyTextResponse?.toString().trim() != ""
+        )
+          return true;
+        else if (allergiesResponse == "No") return true;
+        else return false;
+      },
+      {
+        message: "Please specify your allergies",
+        path: ["allergiesText"],
+      },
+    );
+
+  const form = useForm<z.infer<typeof OrderSchema>>({
+    resolver: zodResolver(OrderSchema),
     defaultValues: {
+      size: `${size_options[0].value}_0`,
       colorTone: "",
+      includeVase: "No",
+      premiumPackaging: "No",
       specificRequest: "",
       allergiesText: "",
       deliveryTime: "",
     },
   });
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+
+  function updateEstimatedCost(){
+    const size = form.getValues().size.split("_")[1];
+    const baseCost = size_options[Number(size)].dollar;
+    const vaseCost = form.getValues().includeVase == "Yes" ? 8 : 0;
+    setEstimatedCost(baseCost + vaseCost)
+  }
+
+  function onSubmit(values: z.infer<typeof OrderSchema>) {
+    const retValues = {"estimatedCost": estimatedCost, ...values}
+    submitOrder(retValues);
   }
 
   return (
@@ -84,7 +112,7 @@ export default function ProductOptionMenu(
               <FormItem>
                 <FormLabel>Size</FormLabel>
                 <Select
-                  onValueChange={field.onChange}
+                  onValueChange={(e)=>{field.onChange(e); updateEstimatedCost();}}
                   defaultValue={field.value}
                 >
                   <FormControl>
@@ -93,9 +121,14 @@ export default function ProductOptionMenu(
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="Small">Small</SelectItem>
-                    <SelectItem value="Medium">Medium</SelectItem>
-                    <SelectItem value="Large">Large</SelectItem>
+                    {size_options.map((size, index) => {
+                      return (
+                        <SelectItem
+                          value={`${size.value}_${index}`}
+                          key={size.value}
+                        >{`${size.value.charAt(0).toUpperCase() + size.value.slice(1)}  +$${size.dollar - size_options[0].dollar}`}</SelectItem>
+                      );
+                    })}
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -116,30 +149,67 @@ export default function ProductOptionMenu(
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="includeVase"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Include vase</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Choose an option" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="Yes">Yes</SelectItem>
-                    <SelectItem value="No">No</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+
+          {additional_options?.map((option) => {
+            //only appears if options are set for product
+            if (option == "vase")
+              return (
+                <FormField
+                  key={option}
+                  control={form.control}
+                  name="includeVase"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Include vase</FormLabel>
+                      <Select
+                        onValueChange={(e)=>{field.onChange(e); updateEstimatedCost();}}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Choose an option" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="Yes">Yes +$8</SelectItem>
+                          <SelectItem value="No">No</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              );
+            else if (option == "premium packaging")
+              return (
+                <FormField
+                  key={option}
+                  control={form.control}
+                  name="premiumPackaging"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Premium Packaging</FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Choose an option" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="Yes">Yes</SelectItem>
+                          <SelectItem value="No">No</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              );
+          })}
+
           <FormField
             control={form.control}
             name="specificRequest"
@@ -208,7 +278,10 @@ export default function ProductOptionMenu(
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <p>{`Estimated total $${estimatedCost}`}</p>
+          <Button type="submit" className="h-16 w-full">
+            Submit
+          </Button>
         </form>
       </Form>
     </div>
