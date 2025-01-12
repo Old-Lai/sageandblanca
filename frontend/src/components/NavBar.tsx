@@ -46,7 +46,7 @@ function toggleNavPanel() {
   let navHambergerIcon = document.getElementById("navHambergerIcon");
   let navHambergerCloseIcon = document.getElementById("navHambergerCloseIcon");
 
-  navPanel && navPanel.classList.toggle("hidden");
-  navHambergerIcon && navHambergerIcon.classList.toggle("hidden");
-  navHambergerCloseIcon && navHambergerCloseIcon.classList.toggle("hidden");
+  navPanel?.classList.toggle("hidden");
+  navHambergerIcon?.classList.toggle("hidden");
+  navHambergerCloseIcon?.classList.toggle("hidden");
 }
