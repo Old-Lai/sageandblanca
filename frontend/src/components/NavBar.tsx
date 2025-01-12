@@ -1,6 +1,5 @@
-import { Menu, X } from "lucide-react";
+import { Menu, X, ShoppingCart } from "lucide-react";
 import { Link } from "react-router-dom";
-import { ShoppingCart } from "lucide-react";
 
 export default function NavBar() {
   return (
@@ -16,7 +15,9 @@ export default function NavBar() {
         <button className="z-10 text-center text-2xl font-semibold">
           <Link to="/">SAGE & BLANCA</Link>
         </button>
-        <ShoppingCart className="z-10 w-16" />
+        <button onClick={()=>{console.log("cart")}}>
+          <ShoppingCart className="z-10 w-16" />
+        </button>
       </div>
       <div
         id="navPanel"
