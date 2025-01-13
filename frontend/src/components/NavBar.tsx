@@ -1,7 +1,16 @@
 import { Menu, X, ShoppingCart } from "lucide-react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function NavBar() {
+  const [cartStatus, setCartStatus] = useState({
+    showPanel: false,
+    cartItemsCount: 0,
+  });
+
+  function toggleCartPanel() {
+    setCartStatus((prev) => ({ ...prev, showPanel: !prev.showPanel }));
+  }
   return (
     <div className="h-full w-full bg-gray-600/0">
       <div className="flex h-full items-center justify-between">
@@ -15,7 +24,11 @@ export default function NavBar() {
         <button className="z-10 text-center text-2xl font-semibold">
           <Link to="/">SAGE & BLANCA</Link>
         </button>
-        <button onClick={()=>{console.log("cart")}}>
+        <button
+          onClick={() => {
+            toggleCartPanel();
+          }}
+        >
           <ShoppingCart className="z-10 w-16" />
         </button>
       </div>
