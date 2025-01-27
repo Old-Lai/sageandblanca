@@ -269,7 +269,7 @@ export default function ProductOptionMenu(
             name="deliveryTime"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Delivery Time</FormLabel>
+                <FormLabel>Prefered Delivery Date</FormLabel>
                 <FormControl>
                   <Input placeholder="Optional..." {...field} />
                 </FormControl>
@@ -280,7 +280,7 @@ export default function ProductOptionMenu(
           />
           <p>{`Estimated total $${estimatedCost}`}</p>
           <Button type="submit" className="h-16 w-full">
-            Submit
+            Add to cart
           </Button>
         </form>
       </Form>
