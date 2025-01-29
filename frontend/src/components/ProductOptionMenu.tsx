@@ -25,6 +25,8 @@ import { cn } from "@/lib/utils";
 import { SizeOption } from "@/lib/interfaces";
 import { useState } from "react";
 
+import NavBar from "./NavBar";
+
 export default function ProductOptionMenu(
   props: Readonly<{
     className?: string;
@@ -279,7 +281,7 @@ export default function ProductOptionMenu(
             )}
           />
           <p>{`Estimated total $${estimatedCost}`}</p>
-          <Button type="submit" className="h-16 w-full">
+          <Button type="submit" className="h-16 w-full" onClick={()=>console.log("add to cart")}>
             Add to cart
           </Button>
         </form>

@@ -1,6 +1,19 @@
 import { Menu, X, ShoppingCart } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import NavPanel from "./NavPanel";
+import CartPanel from "./CartPanel";
+
+function toggleNavPanel() {
+  let navPanel = document.getElementById("navPanel");
+  let navHambergerIcon = document.getElementById("navHambergerIcon");
+  let navHambergerCloseIcon = document.getElementById("navHambergerCloseIcon");
+
+  navPanel?.classList.toggle("hidden");
+  navHambergerIcon?.classList.toggle("hidden");
+  navHambergerCloseIcon?.classList.toggle("hidden");
+}
+
 
 export default function NavBar() {
   const [cartStatus, setCartStatus] = useState({
@@ -8,7 +21,20 @@ export default function NavBar() {
     cartItemsCount: 0,
   });
 
+  useEffect(()=>{
+    const cartItems = localStorage.getItem("shoppingCart")
+    if(cartItems?.length)
+      setCartStatus(prev=>({...prev, cartItems}))
+    else
+      setCartStatus(prev=>({...prev, cartItems:[]}))
+  }, [])
+
+  function updateCart(){
+    console.log("update cart")
+  }
+
   function toggleCartPanel() {
+    console.log("cart pressed", cartStatus)
     setCartStatus((prev) => ({ ...prev, showPanel: !prev.showPanel }));
   }
   return (
@@ -32,35 +58,8 @@ export default function NavBar() {
           <ShoppingCart className="z-10 w-16" />
         </button>
       </div>
-      <div
-        id="navPanel"
-        className="absolute left-0 top-0 flex hidden h-screen w-screen flex-col items-center justify-center bg-slate-700"
-      >
-        <button className="h-14 w-full" onClick={() => toggleNavPanel()}>
-          <Link to="/" className="text-4xl">
-            Home
-          </Link>
-        </button>
-        <button className="h-14 w-full">
-          <Link
-            to="/order"
-            className="text-4xl"
-            onClick={() => toggleNavPanel()}
-          >
-            Order
-          </Link>
-        </button>
-      </div>
+      <NavPanel toggleNavPanel={toggleCartPanel}/>
+      <CartPanel />
     </div>
   );
-}
-
-function toggleNavPanel() {
-  let navPanel = document.getElementById("navPanel");
-  let navHambergerIcon = document.getElementById("navHambergerIcon");
-  let navHambergerCloseIcon = document.getElementById("navHambergerCloseIcon");
-
-  navPanel?.classList.toggle("hidden");
-  navHambergerIcon?.classList.toggle("hidden");
-  navHambergerCloseIcon?.classList.toggle("hidden");
 }
