@@ -27,13 +27,11 @@ export default function NavBar() {
           className="flex h-full w-16 items-center justify-center"
           onClick={() => toggleNavPanel()}
         >
-          {
-            panelStatus.menu ? (
-              <X className="z-10" />
-            ) : (
-              <Menu id="navHambergerIcon" className="z-10"/>
-            )
-          }
+          {panelStatus.menu ? (
+            <X className="z-10" />
+          ) : (
+            <Menu id="navHambergerIcon" className="z-10" />
+          )}
         </button>
         <button className="z-10 text-center text-2xl font-semibold">
           <Link to="/">SAGE & BLANCA</Link>
@@ -43,13 +41,11 @@ export default function NavBar() {
             toggleCartPanel();
           }}
         >
-          <ShoppingCart className="z-10 w-16" />
+          <ShoppingCart className="w-16" />
         </button>
       </div>
-      {panelStatus.menu && <NavPanel toggleNavPanel={toggleNavPanel} />}
+      <NavPanel toggleNavPanel={toggleNavPanel} isShow={panelStatus.menu} />
       <CartPanel />
     </div>
   );
 }
-
-export { NavBar };
