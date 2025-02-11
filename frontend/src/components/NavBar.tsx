@@ -1,42 +1,25 @@
 import { Menu, X, ShoppingCart } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import NavPanel from "./NavPanel";
 import CartPanel from "./CartPanel";
 
-function toggleNavPanel() {
-  let navPanel = document.getElementById("navPanel");
-  let navHambergerIcon = document.getElementById("navHambergerIcon");
-  let navHambergerCloseIcon = document.getElementById("navHambergerCloseIcon");
-
-  navPanel?.classList.toggle("hidden");
-  navHambergerIcon?.classList.toggle("hidden");
-  navHambergerCloseIcon?.classList.toggle("hidden");
-}
-
-
 export default function NavBar() {
-  const [cartStatus, setCartStatus] = useState({
-    showPanel: false,
-    cartItemsCount: 0,
+  const [panelStatus, setPanelStatus] = useState({
+    cart: false,
+    menu: false,
   });
 
-  useEffect(()=>{
-    const cartItems = localStorage.getItem("shoppingCart")
-    if(cartItems?.length)
-      setCartStatus(prev=>({...prev, cartItems}))
-    else
-      setCartStatus(prev=>({...prev, cartItems:[]}))
-  }, [])
-
-  function updateCart(){
-    console.log("update cart")
-  }
-
   function toggleCartPanel() {
-    console.log("cart pressed", cartStatus)
-    setCartStatus((prev) => ({ ...prev, showPanel: !prev.showPanel }));
+    console.log("cart pressed", !panelStatus.cart);
+    setPanelStatus((prev) => ({ ...prev, cart: !prev.cart }));
   }
+
+  function toggleNavPanel() {
+    console.log("nav pressed", !panelStatus.menu);
+    setPanelStatus((prev) => ({ ...prev, menu: !prev.menu }));
+  }
+
   return (
     <div className="h-full w-full bg-gray-600/0">
       <div className="flex h-full items-center justify-between">
@@ -44,8 +27,13 @@ export default function NavBar() {
           className="flex h-full w-16 items-center justify-center"
           onClick={() => toggleNavPanel()}
         >
-          <Menu id="navHambergerIcon" />
-          <X id="navHambergerCloseIcon" className="z-10 hidden" />
+          {
+            panelStatus.menu ? (
+              <X className="z-10" />
+            ) : (
+              <Menu id="navHambergerIcon" className="z-10"/>
+            )
+          }
         </button>
         <button className="z-10 text-center text-2xl font-semibold">
           <Link to="/">SAGE & BLANCA</Link>
@@ -58,8 +46,10 @@ export default function NavBar() {
           <ShoppingCart className="z-10 w-16" />
         </button>
       </div>
-      <NavPanel toggleNavPanel={toggleCartPanel}/>
+      {panelStatus.menu && <NavPanel toggleNavPanel={toggleNavPanel} />}
       <CartPanel />
     </div>
   );
 }
+
+export { NavBar };
