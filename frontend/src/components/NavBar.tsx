@@ -24,14 +24,17 @@ export default function NavBar() {
     <div className="h-full w-full bg-gray-600/0">
       <div className="flex h-full items-center justify-between">
         <button
-          className="flex h-full w-16 items-center justify-center"
+          className="relative z-10 h-full w-16"
           onClick={() => toggleNavPanel()}
         >
-          {panelStatus.menu ? (
-            <X className="z-10" />
-          ) : (
-            <Menu id="navHambergerIcon" className="z-10" />
-          )}
+          <X
+            className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity ${panelStatus.menu ? "opacity-100" : "opacity-0"}`}
+            aria-hidden={panelStatus.menu}
+          />
+          <Menu
+            className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity ${panelStatus.menu ? "opacity-0" : "opacity-100"}`}
+            aria-hidden={!panelStatus.menu}
+          />
         </button>
         <button className="z-10 text-center text-2xl font-semibold">
           <Link to="/">SAGE & BLANCA</Link>
