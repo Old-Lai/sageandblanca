@@ -25,8 +25,6 @@ import { cn } from "@/lib/utils";
 import { SizeOption } from "@/lib/interfaces";
 import { useState } from "react";
 
-import NavBar from "./NavBar";
-
 export default function ProductOptionMenu(
   props: Readonly<{
     className?: string;
