@@ -6,14 +6,8 @@ import CartPanel from "./CartPanel";
 
 export default function NavBar() {
   const [panelStatus, setPanelStatus] = useState({
-    cart: false,
     menu: false,
   });
-
-  function toggleCartPanel() {
-    console.log("cart pressed", !panelStatus.cart);
-    setPanelStatus((prev) => ({ ...prev, cart: !prev.cart }));
-  }
 
   function toggleNavPanel() {
     console.log("nav pressed", !panelStatus.menu);
@@ -39,16 +33,9 @@ export default function NavBar() {
         <button className="z-10 text-center text-2xl font-semibold">
           <Link to="/">SAGE & BLANCA</Link>
         </button>
-        <button
-          onClick={() => {
-            toggleCartPanel();
-          }}
-        >
-          <ShoppingCart className="w-16" />
-        </button>
+          <CartPanel />
       </div>
       <NavPanel toggleNavPanel={toggleNavPanel} isShow={panelStatus.menu} />
-      <CartPanel />
     </div>
   );
 }
