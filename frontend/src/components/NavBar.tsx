@@ -23,17 +23,15 @@ export default function NavBar() {
         >
           <X
             className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity ${panelStatus.menu ? "opacity-100" : "opacity-0"}`}
-            aria-hidden={panelStatus.menu}
           />
           <Menu
             className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity ${panelStatus.menu ? "opacity-0" : "opacity-100"}`}
-            aria-hidden={!panelStatus.menu}
           />
         </button>
         <button className="z-10 text-center text-2xl font-semibold">
           <Link to="/">SAGE & BLANCA</Link>
         </button>
-          <CartPanel />
+        <CartPanel />
       </div>
       <NavPanel toggleNavPanel={toggleNavPanel} isShow={panelStatus.menu} />
     </div>

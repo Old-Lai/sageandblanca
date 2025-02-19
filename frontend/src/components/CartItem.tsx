@@ -6,7 +6,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Separator } from "@/components/ui/separator";
 
 interface Item {
   id: string;
@@ -53,7 +52,6 @@ export default function CartItem(props: Props) {
           <div className="right-0 w-[20%] text-right">{item.price}.00</div>
         </div>
       </div>
-      <Separator decorative className="my-1" />
     </div>
   );
 }
