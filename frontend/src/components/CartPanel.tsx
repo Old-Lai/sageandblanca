@@ -1,9 +1,7 @@
-import { X, ShoppingCart } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
-  SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
@@ -12,7 +10,7 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "./ui/button";
 import CartItem from "./CartItem";
 
-const tags = Array.from({ length: 10 }).map((_, i, a) => {
+const tags = Array.from({ length: 10 }).map((_, i) => {
   return {
     id: `000${i*7}`,
     name: `product-${i} ${i%3 === 0 ? "testing test testing test testing test" : ""}`,

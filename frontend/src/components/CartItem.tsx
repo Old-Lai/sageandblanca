@@ -16,7 +16,7 @@ interface Item {
 }
 
 interface Props {
-  item: Item;
+  readonly item: Item;
 }
 
 export default function CartItem(props: Props) {
