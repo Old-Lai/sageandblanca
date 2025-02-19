@@ -19,6 +19,8 @@ interface Props {
   readonly item: Item;
 }
 
+const TEMP_SELECTION = Array.from({ length: 10 })
+
 export default function CartItem(props: Props) {
   const { item } = props;
   return (
@@ -33,8 +35,8 @@ export default function CartItem(props: Props) {
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  {Array.from({ length: 10 }).map((_, i) => (
-                    <SelectItem key={i} value={`${i + 1}`.toString()}>
+                  {TEMP_SELECTION.map((_, i) => (
+                    <SelectItem key={`${item.id}-${i}`} value={`${i + 1}`.toString()}>
                       {i + 1}
                     </SelectItem>
                   ))}
