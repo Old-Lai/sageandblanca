@@ -9,23 +9,32 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "./ui/button";
 import CartItem from "./CartItem";
+import { useEffect, useState } from "react";
 
-const tags = Array.from({ length: 10 }).map((_, i) => {
-  return {
-    id: `000${i * 7}`,
-    name: `product-${i} ${i % 3 === 0 ? "testing test testing test testing test" : ""}`,
-    price: `$${i}`,
-    quantity: "1",
-  };
-});
+interface Item {
+  id: string;
+  name: string;
+  price: string;
+  quantity: string;
+}
 
 export default function CartPanel() {
+  const [cartItems, setCartItems] = useState<Array<Item>>([]);
+
+  useEffect(() => {
+    const ItemStr = window.localStorage.getItem("cart");
+    let storedItems = ItemStr?.split(";").map((item) => JSON.parse(item));
+    if (storedItems && storedItems.length > 0) {
+      console.log(storedItems);
+      setCartItems(storedItems);
+    }
+  }, []);
   return (
     <Sheet>
       <SheetTrigger>
-        {tags.length != 0 && (
+        {cartItems.length != 0 && (
           <div className="absolute top-[15%] w-5 translate-x-9 text-center text-xs font-semibold">
-            {tags.length}
+            {cartItems.length}
           </div>
         )}
         <ShoppingCart className="w-16" />
@@ -42,14 +51,14 @@ export default function CartPanel() {
         <div className="h-[50%] w-full px-5">
           <ScrollArea className="h-full w-full">
             <div>
-              {tags.map((tag, i) => {
+              {cartItems.map((tag, i) => {
                 return (
-                  <>
-                    <CartItem key={tag.name} item={tag} />
-                    {i != tags.length - 1 && (
+                  <div key={tag.name}>
+                    <CartItem item={tag} />
+                    {i != cartItems.length - 1 && (
                       <Separator decorative className="my-1" />
                     )}
-                  </>
+                  </div>
                 );
               })}
             </div>
