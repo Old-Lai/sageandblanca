@@ -7,34 +7,36 @@ import {
 } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import { Button } from "./ui/button";
-import CartItem from "./CartItem";
+import { Button } from "@/components/ui/button";
+import CartItem from "@/components/CartItem";
 import { useEffect, useState } from "react";
-
-interface Item {
-  id: string;
-  name: string;
-  price: string;
-  quantity: string;
-}
+import { useCartStore } from "./functions/cart";
 
 export default function CartPanel() {
-  const [cartItems, setCartItems] = useState<Array<Item>>([]);
+  const cartItems = useCartStore((state) => state.items);
+  const updateItems = useCartStore((state) => state.update);
+  const [estimatedTotal, setEstimatedTotal] = useState(0);
 
   useEffect(() => {
-    const ItemStr = window.localStorage.getItem("cart");
-    let storedItems = ItemStr?.split(";").map((item) => JSON.parse(item));
-    if (storedItems && storedItems.length > 0) {
-      console.log(storedItems);
-      setCartItems(storedItems);
-    }
+    updateItems();
   }, []);
+
+  useEffect(() => {
+    let sum = cartItems
+      .map((item) => item.quantity * item.unitCost)
+      .reduce((prevSum, curSum) => prevSum + curSum, 0);
+    setEstimatedTotal(sum);
+  }, [cartItems]);
+
   return (
     <Sheet>
       <SheetTrigger>
         {cartItems.length != 0 && (
           <div className="absolute top-[15%] w-5 translate-x-9 text-center text-xs font-semibold">
-            {cartItems.length}
+            {cartItems.reduce(
+              (prevQuantity, item) => prevQuantity + item.quantity,
+              0,
+            )}
           </div>
         )}
         <ShoppingCart className="w-16" />
@@ -50,25 +52,42 @@ export default function CartPanel() {
         <Separator decorative />
         <div className="h-[50%] w-full px-5">
           <ScrollArea className="h-full w-full">
-            <div>
-              {cartItems.map((tag, i) => {
+            {cartItems.length > 0 ? (
+              cartItems.map((tag, i) => {
                 return (
-                  <div key={tag.name}>
+                  <div key={`${tag.name}-${i}`}>
                     <CartItem item={tag} />
                     {i != cartItems.length - 1 && (
                       <Separator decorative className="my-1" />
                     )}
                   </div>
                 );
-              })}
-            </div>
+              })
+            ) : (
+              <div className="">
+                <h2 className="text-center text-2xl opacity-40">
+                  Nothing here so far...
+                </h2>
+              </div>
+            )}
           </ScrollArea>
         </div>
         <Separator decorative className="w-full" />
-        <p className="mt-5 px-5 text-sm">Tmporary text</p>
+        <div className="mx-5 my-5 flex justify-between">
+          <p className="font-semibold">Subtotal (Tax Excl.)</p>
+          <p className="text-2xl">{`$${estimatedTotal}.00`}</p>
+        </div>
         <div className="absolute bottom-20 left-0 flex h-fit w-full justify-center py-5">
           <Button className="h-12 w-[80%]">Checkout</Button>
         </div>
+        <Button
+          onClick={() => {
+            window.localStorage.clear();
+            updateItems();
+          }}
+        >
+          (Dev) Clear Local Data
+        </Button>
       </SheetContent>
     </Sheet>
   );

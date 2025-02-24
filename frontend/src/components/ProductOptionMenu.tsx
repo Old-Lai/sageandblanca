@@ -89,16 +89,22 @@ export default function ProductOptionMenu(
     },
   });
 
-  function updateEstimatedCost(){
+  function updateEstimatedCost() {
     const size = form.getValues().size.split("_")[1];
     const baseCost = size_options[Number(size)].dollar;
     const vaseCost = form.getValues().includeVase == "Yes" ? 8 : 0;
-    setEstimatedCost(baseCost + vaseCost)
+    setEstimatedCost(baseCost + vaseCost);
   }
 
   function onSubmit(values: z.infer<typeof OrderSchema>) {
-    const retValues = {"estimatedCost": estimatedCost, ...values}
-    submitOrder(retValues);
+    const orderDetails = {
+      ...values,
+      estimatedCost: estimatedCost,
+      size: values.size.split("_")[0],
+      includeVase: values.includeVase == "Yes",
+      premiumPackaging: values.premiumPackaging == "Yes",
+    };
+    submitOrder(orderDetails);
   }
 
   return (
@@ -112,7 +118,10 @@ export default function ProductOptionMenu(
               <FormItem>
                 <FormLabel>Size</FormLabel>
                 <Select
-                  onValueChange={(e)=>{field.onChange(e); updateEstimatedCost();}}
+                  onValueChange={(e) => {
+                    field.onChange(e);
+                    updateEstimatedCost();
+                  }}
                   defaultValue={field.value}
                 >
                   <FormControl>
@@ -162,7 +171,10 @@ export default function ProductOptionMenu(
                     <FormItem>
                       <FormLabel>Include vase</FormLabel>
                       <Select
-                        onValueChange={(e)=>{field.onChange(e); updateEstimatedCost();}}
+                        onValueChange={(e) => {
+                          field.onChange(e);
+                          updateEstimatedCost();
+                        }}
                         defaultValue={field.value}
                       >
                         <FormControl>
@@ -279,7 +291,7 @@ export default function ProductOptionMenu(
             )}
           />
           <p>{`Estimated total $${estimatedCost}`}</p>
-          <Button type="submit" className="h-16 w-full" onClick={()=>console.log("add to cart")}>
+          <Button type="submit" className="h-16 w-full">
             Add to cart
           </Button>
         </form>

@@ -3,13 +3,19 @@ import { ImageCarosel, ProductOptionMenu } from "@/components";
 import { productList } from "@/assets/product_list";
 import { imageList } from "@/assets/image_list";
 import { formatCent } from "@/lib/formatCent";
+import { OrderDetail, OrderItem } from "@/lib/interfaces";
+import { useCartStore, cart } from "@/components/functions/cart";
 
 export default function SingleProduct() {
   let { id: productId } = useParams();
+  let imagesArr = imageList[productId as keyof typeof imageList];
+  //check if valid productId
   let productCategory = Object.keys(productList).map((key) => {
     return productList[key as keyof Object].category;
   });
   let isValidProductId = productCategory.indexOf(`${productId}`) >= 0;
+
+  //get info of the correct product matching productId
   let product = Object.keys(productList)
     .map((key) => {
       return productList[key as keyof Object].category == `${productId}`
@@ -20,11 +26,46 @@ export default function SingleProduct() {
       return item !== null;
     })[0];
   let centDisplay = formatCent(product.cent);
-  let imagesArr = imageList[productId as keyof typeof imageList];
 
-  function submitOrder(value: Object) {
-    console.log(value);
-    console.log("add to cart");
+  //handle Cart store and updates
+  const updateItems = useCartStore((state) => state.update);
+
+  function submitOrder(orderDetails: OrderDetail) {
+    const ProductName = productId ?? "";
+    let orderItem: OrderItem = {
+      name: ProductName[0].toUpperCase() + ProductName.slice(1),
+      unitCost: orderDetails.estimatedCost,
+      quantity: 1,
+      orderDetails,
+    };
+    let prevCart = cart.retrieve();
+    if (prevCart.length == 0) {
+      prevCart.push(orderItem);
+    } else {
+      let match = prevCart
+        .map((item, index) => {
+          let prevQuantity = item.quantity;
+          orderItem.quantity = prevQuantity;
+          if (JSON.stringify(item) == JSON.stringify(orderItem))
+            return [index, prevQuantity];
+        })
+        .filter((found) => {
+          return found !== undefined;
+        })[0];
+
+      orderItem.quantity = 1;
+
+      if (!match) {
+        prevCart.push(orderItem);
+      } else {
+        let index = match[0];
+        let quantity = match[1] + 1;
+        orderItem.quantity = quantity;
+        prevCart[index] = orderItem;
+      }
+    }
+    cart.store(prevCart);
+    updateItems();
   }
 
   return (

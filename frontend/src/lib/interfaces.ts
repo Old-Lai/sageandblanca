@@ -14,3 +14,22 @@ export interface Product {
   cent: number;
   image: string;
 }
+
+export interface OrderDetail {
+  allergies: string;
+  allergiesText: string;
+  colorTone: string;
+  deliveryTime: string;
+  estimatedCost: number;
+  includeVase: boolean;
+  premiumPackaging: boolean;
+  size: string;
+  specificRequest: string;
+}
+
+export interface OrderItem {
+  name: string;
+  unitCost: number;
+  quantity: number;
+  orderDetails: OrderDetail;
+}
