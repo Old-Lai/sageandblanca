@@ -10,7 +10,6 @@ export default function NavBar() {
   });
 
   function toggleNavPanel() {
-    console.log("nav pressed", !panelStatus.menu);
     setPanelStatus((prev) => ({ ...prev, menu: !prev.menu }));
   }
 
