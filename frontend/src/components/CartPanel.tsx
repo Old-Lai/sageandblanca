@@ -5,12 +5,12 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import CartItem from "@/components/CartItem";
 import { useEffect, useState } from "react";
 import { useCartStore } from "./functions/cart";
+import { Link } from "react-router-dom";
+import ItemList from "./ItemList";
 
 export default function CartPanel() {
   const cartItems = useCartStore((state) => state.items);
@@ -51,26 +51,7 @@ export default function CartPanel() {
         </SheetTitle>
         <Separator decorative />
         <div className="h-[50%] w-full px-5">
-          <ScrollArea className="h-full w-full">
-            {cartItems.length > 0 ? (
-              cartItems.map((tag, i) => {
-                return (
-                  <div key={`${tag.name}-${i}`}>
-                    <CartItem item={tag} />
-                    {i != cartItems.length - 1 && (
-                      <Separator decorative className="my-1" />
-                    )}
-                  </div>
-                );
-              })
-            ) : (
-              <div className="">
-                <h2 className="text-center text-2xl opacity-40">
-                  Nothing here so far...
-                </h2>
-              </div>
-            )}
-          </ScrollArea>
+          <ItemList cartItems={cartItems} />
         </div>
         <Separator decorative className="w-full" />
         <div className="mx-5 my-5 flex justify-between">
@@ -78,7 +59,12 @@ export default function CartPanel() {
           <p className="text-2xl">{`$${estimatedTotal}.00`}</p>
         </div>
         <div className="absolute bottom-20 left-0 flex h-fit w-full justify-center py-5">
-          <Button className="h-12 w-[80%]">Checkout</Button>
+          <Button
+            className="h-12 w-[80%]"
+            onClick={() => console.log(cartItems)}
+          >
+            <Link to="/checkout">Checkout</Link>
+          </Button>
         </div>
         <Button
           onClick={() => {

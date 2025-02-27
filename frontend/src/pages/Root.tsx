@@ -5,13 +5,22 @@ import { useEffect, useState } from "react";
 
 const navBarVariants: Record<string, Record<string, string>> = {
   "/": {
-    up: "fixed left-0 top-0 h-16 bg-zinc-700/55",
-    down: "fixed left-0 top-0 h-12 bg-zinc-900",
+    up: "fixed left-0 top-0 h-16 bg-zinc-700/55 backdrop-blur-sm text-white",
+    down: "fixed left-0 top-0 h-12 bg-zinc-900 backdrop-blur-sm text-white",
+  },
+  "/checkout": {
+    up: "hidden",
+    down: "hidden",
   },
   default: {
     up: "fixed left-0 top-0 h-16 bg-white text-zinc-900 shadow-lg mb-4",
-    down: "fixed left-0 top-0 h-12 bg-zinc-900",
+    down: "fixed left-0 top-0 h-12 bg-zinc-900 text-white",
   },
+};
+
+const footerVariants: Record<string, string> = {
+  "/checkout": "hidden",
+  default: "",
 };
 
 export default function Root() {
@@ -66,14 +75,14 @@ export default function Root() {
   return (
     <div>
       <header
-        className={`${navBarVariants[currentPath][scrollDir]} fixed z-10 flex w-full items-center justify-between text-white backdrop-blur-sm transition-all duration-300`}
+        className={`${navBarVariants[currentPath][scrollDir]} fixed z-10 flex w-full items-center justify-between transition-all duration-300`}
       >
         <NavBar />
       </header>
       <main>
         <Outlet />
       </main>
-      <footer>
+      <footer className={`${footerVariants[currentPath]}`}>
         <FooterNav />
       </footer>
     </div>
