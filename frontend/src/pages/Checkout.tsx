@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCartStore } from "@/components/functions/cart";
 import ItemList from "@/components/ItemList";
 import {
@@ -15,7 +15,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Checkoutforms from "@/components/CheckoutForms";
 
 const CHECKOUT_STEPS = ["Customer", "Order Request"];
@@ -23,6 +23,12 @@ const CHECKOUT_STEPS = ["Customer", "Order Request"];
 export default function Checkout() {
   const cartItems = useCartStore((state) => state.items);
   const [currentStep, setCurrentStep] = useState<string>(CHECKOUT_STEPS[0]);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (cartItems.length == 0) {
+      navigate("/");
+    }
+  });
   return (
     <div>
       <div className="flex h-16 items-center bg-red-300 pl-5">

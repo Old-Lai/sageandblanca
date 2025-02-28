@@ -1,7 +1,9 @@
 import { ShoppingCart } from "lucide-react";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
+  SheetFooter,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
@@ -9,10 +11,11 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { useCartStore } from "./functions/cart";
-import { Link } from "react-router-dom";
 import ItemList from "./ItemList";
+import { useNavigate } from "react-router-dom";
 
 export default function CartPanel() {
+  const navigate = useNavigate();
   const cartItems = useCartStore((state) => state.items);
   const updateItems = useCartStore((state) => state.update);
   const [estimatedTotal, setEstimatedTotal] = useState(0);
@@ -27,6 +30,12 @@ export default function CartPanel() {
       .reduce((prevSum, curSum) => prevSum + curSum, 0);
     setEstimatedTotal(sum);
   }, [cartItems]);
+
+  function handleNavigateToCheckout() {
+    if (cartItems.length == 0) {
+      console.log("Nothing is in cart");
+    } else navigate("/checkout");
+  }
 
   return (
     <Sheet>
@@ -58,14 +67,18 @@ export default function CartPanel() {
           <p className="font-semibold">Subtotal (Tax Excl.)</p>
           <p className="text-2xl">{`$${estimatedTotal}.00`}</p>
         </div>
-        <div className="absolute bottom-20 left-0 flex h-fit w-full justify-center py-5">
-          <Button
-            className="h-12 w-[80%]"
-            onClick={() => console.log(cartItems)}
-          >
-            <Link to="/checkout">Checkout</Link>
-          </Button>
-        </div>
+        <SheetFooter className="absolute bottom-20 flex h-fit w-full items-center py-5">
+          <SheetClose asChild>
+            <Button
+              type="submit"
+              className="h-12 w-[80%]"
+              onClick={() => handleNavigateToCheckout()}
+            >
+              Checkout
+            </Button>
+          </SheetClose>
+        </SheetFooter>
+
         <Button
           onClick={() => {
             window.localStorage.clear();
