@@ -1,27 +1,39 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { Menu } from "lucide-react";
 
-interface Props {
-  readonly toggleNavPanel: Function;
-  readonly isShow: boolean;
-}
-
-export default function NavPanel(props: Props) {
-  const { toggleNavPanel, isShow } = props;
+export default function NavPanel() {
+  const navigate = useNavigate();
   return (
-    <div
-      id="navPanel"
-      className={`absolute left-0 top-0 flex h-[50vh] w-screen flex-col items-center justify-center bg-slate-500 transition-all duration-500 ${isShow ? "opacity-100" : "translate-y-[-50vh] opacity-0"}`}
-    >
-      <button className="h-14 w-full" onClick={() => toggleNavPanel()}>
-        <Link to="/" className="text-4xl">
-          Home
-        </Link>
-      </button>
-      <button className="h-14 w-full">
-        <Link to="/order" className="text-4xl" onClick={() => toggleNavPanel()}>
-          Order
-        </Link>
-      </button>
-    </div>
+    <Sheet>
+      <SheetTrigger>
+        <Menu className="w-16" />
+      </SheetTrigger>
+      <SheetContent side="left">
+        <SheetTitle>Menu</SheetTitle>
+        <SheetClose asChild>
+          <button
+            className="h-14 w-full text-left"
+            onClick={() => navigate("/")}
+          >
+            - Home
+          </button>
+        </SheetClose>
+        <SheetClose asChild>
+          <button
+            className="h-14 w-full text-left"
+            onClick={() => navigate("/order")}
+          >
+            - Order
+          </button>
+        </SheetClose>
+      </SheetContent>
+    </Sheet>
   );
 }
