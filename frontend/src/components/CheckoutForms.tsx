@@ -244,7 +244,7 @@ interface Props {
   readonly CHECKOUT_STEPS: string[];
 }
 
-export default function Checkoutforms(props: Props) {
+export default function Checkoutforms(props: Readonly<Props>) {
   const { currentStep, setCurrentStep, CHECKOUT_STEPS } = props;
   const [customerDetails, setCustomerDetails] = useState<CustomerInfo>({
     email: "",
