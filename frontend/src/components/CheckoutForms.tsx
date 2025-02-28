@@ -17,31 +17,80 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Button } from "./ui/button";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 import { Input } from "./ui/input";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useCartStore } from "./functions/cart";
 
 const VERT_SPACING = "1";
 
-function CustomerForm() {
+interface CustomerInfo {
+  email: string;
+  title?: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber?: string;
+  zipCode: string;
+}
+
+interface CustomerFormProps {
+  customerDetails: CustomerInfo;
+  setCustomerDetails: Function;
+  setCurrentStep: Function;
+}
+
+function CustomerForm(props: Readonly<CustomerFormProps>) {
+  const { customerDetails, setCustomerDetails, setCurrentStep } = props;
+
   const TITLES: [string, ...string[]] = [
     "N/A",
     ...["Mrs", "Dr", "Miss", "Mx", "Ms", "Mr"],
   ];
   const CustomerSchema = z.object({
-    email: z.string(),
+    email: z
+      .string()
+      .refine(
+        (value) =>
+          /^[a-zA-Z0-9_.±]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/.test(value ?? ""),
+        "Please input a valid email",
+      ),
     title: z.enum(TITLES).optional(),
-    firstName: z.string(),
-    lastName: z.string(),
+    firstName: z.string().min(2, "Name should have atleast 2 characters"),
+    lastName: z.string().min(2, "Name should have atleast 2 characters"),
     phone: z.string().optional(),
-    zipCode: z.string(),
+    zipCode: z
+      .string()
+      .refine(
+        (value) => /^\d{5}(?:[-\s]\d{4})?$/.test(value ?? ""),
+        "Please input a valid ZIP code",
+      ),
   });
 
   const form = useForm<z.infer<typeof CustomerSchema>>({
     resolver: zodResolver(CustomerSchema),
+    defaultValues: {
+      email: customerDetails.email,
+      title: customerDetails.title,
+      firstName: customerDetails.firstName,
+      lastName: customerDetails.lastName,
+      phone: customerDetails.phoneNumber,
+      zipCode: customerDetails.zipCode,
+    },
   });
 
   function onSubmit(data: z.infer<typeof CustomerSchema>) {
     console.log("submitted", data);
+    setCustomerDetails({
+      email: data.email,
+      title: data.title,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      phoneNumber: data.phone,
+      zipCode: data.zipCode,
+    });
+    setCurrentStep("Order Request");
   }
 
   return (
@@ -147,8 +196,46 @@ function CustomerForm() {
     </div>
   );
 }
-function OrderRequestForm() {
-  return <p>Order Request</p>;
+
+interface OrderRequestFormProps {
+  customerDetails: CustomerInfo;
+  setCurrentStep: Function;
+}
+
+function OrderRequestForm(props: Readonly<OrderRequestFormProps>) {
+  const { customerDetails, setCurrentStep } = props;
+
+  const navigate = useNavigate();
+  const updateItems = useCartStore((state) => state.update);
+
+  function submitRequest() {
+    toast("Order Request Status", {
+      description: `Sucessfully requested ${JSON.stringify(customerDetails)}`,
+    });
+    window.localStorage.removeItem("cart");
+    updateItems();
+    navigate("/");
+  }
+  return (
+    <div>
+      <div className="text flex h-28 items-center justify-between bg-slate-200 px-5 font-semibold">
+        <div className="flex flex-col">
+          <p>{`Email: ${customerDetails.email}`}</p>
+          <p>{`First: ${customerDetails.firstName}`}</p>
+          <p>{`Last: ${customerDetails.lastName}`}</p>
+          <p>{`ZIP: ${customerDetails.zipCode}`}</p>
+        </div>
+        <div className="">
+          <button onClick={() => setCurrentStep("Customer")}>edit</button>
+        </div>
+      </div>
+      <p>
+        Please Note that this is not a confirmation of order, order confirmation
+        will be sent through email once we decided to proceed with this order
+      </p>
+      <Button onClick={() => submitRequest()}>Submit Request</Button>
+    </div>
+  );
 }
 
 interface Props {
@@ -159,6 +246,12 @@ interface Props {
 
 export default function Checkoutforms(props: Props) {
   const { currentStep, setCurrentStep, CHECKOUT_STEPS } = props;
+  const [customerDetails, setCustomerDetails] = useState<CustomerInfo>({
+    email: "",
+    firstName: "",
+    lastName: "",
+    zipCode: "",
+  });
 
   return (
     <div>
@@ -169,8 +262,19 @@ export default function Checkoutforms(props: Props) {
           </Button>
         );
       })}
-      {currentStep == CHECKOUT_STEPS[0] && <CustomerForm />}
-      {currentStep == CHECKOUT_STEPS[1] && <OrderRequestForm />}
+      {currentStep == CHECKOUT_STEPS[0] && (
+        <CustomerForm
+          customerDetails={customerDetails}
+          setCustomerDetails={setCustomerDetails}
+          setCurrentStep={setCurrentStep}
+        />
+      )}
+      {currentStep == CHECKOUT_STEPS[1] && (
+        <OrderRequestForm
+          customerDetails={customerDetails}
+          setCurrentStep={setCurrentStep}
+        />
+      )}
     </div>
   );
 }

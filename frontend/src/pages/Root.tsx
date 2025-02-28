@@ -1,5 +1,6 @@
 import { Outlet, useLocation } from "react-router-dom";
 import { FooterNav, NavBar } from "@/components";
+import { Toaster } from "@/components/ui/sonner";
 
 import { useEffect, useState } from "react";
 
@@ -81,6 +82,7 @@ export default function Root() {
       </header>
       <main>
         <Outlet />
+        <Toaster />
       </main>
       <footer className={`${footerVariants[currentPath]}`}>
         <FooterNav />

@@ -30,39 +30,41 @@ export default function Checkout() {
           <Link to="/">SAGE & BLANCA</Link>
         </button>
       </div>
-      <Accordion type="single" collapsible>
-        <AccordionItem value="item-1" className="min-h-16 px-5">
-          <AccordionTrigger className="text-xl font-normal">
-            Order Summary
-          </AccordionTrigger>
-          <AccordionContent>
-            <Separator decorative />
-            <div className="h-80">
-              <ItemList cartItems={cartItems} />
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
-      <div className="px-5 pt-5">
-        <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbPage
-                className={`${currentStep == CHECKOUT_STEPS[0] && "font-bold"}`}
-              >
-                Customer
-              </BreadcrumbPage>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage
-                className={`${currentStep == CHECKOUT_STEPS[1] && "font-bold"}`}
-              >
-                Order Request
-              </BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
+      <div className="py-5">
+        <Accordion type="single" collapsible>
+          <AccordionItem value="item-1" className="min-h-16 px-5">
+            <AccordionTrigger className="text-xl font-normal">
+              Order Summary
+            </AccordionTrigger>
+            <AccordionContent>
+              <Separator decorative />
+              <div className="h-80">
+                <ItemList cartItems={cartItems} />
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+        <div className="px-5 pt-5">
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbPage
+                  className={`${currentStep == CHECKOUT_STEPS[0] && "font-bold"}`}
+                >
+                  Customer
+                </BreadcrumbPage>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage
+                  className={`${currentStep == CHECKOUT_STEPS[1] && "font-bold"}`}
+                >
+                  Order Request
+                </BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </div>
       </div>
       <Checkoutforms
         currentStep={currentStep}
